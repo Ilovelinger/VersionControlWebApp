@@ -1,0 +1,25 @@
+﻿@addTagHelper " *,Microsoft.AspNetCore.Mvc.TagHelpers"
+@model WebApplication8.Models.PostListViewModel
+
+@{
+    ViewData["Title"] = "PostList";
+}
+
+<h2>PostList</h2>
+
+<body>
+    There are @Model.NumberOfPosts posts
+    <ul>
+        @foreach (WebApplication8.Models.Post post in Model.Posts)
+        {
+            <li>@post.title</li>
+            <li>@post.author</li>
+            <li>@post.content
+                <a asp-controller="Post" asp-action="AddComments" asp-route-id="@post.postid">ViewComments   </a>
+                <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.postid">Delete   </a>
+                <a asp-controller="Post" asp-action="EditPost" asp-route-id="@post.postid">Edit</a></li>
+            <li>    </li>
+        }
+    </ul>
+    <a asp-action="Index">Add a new post</a>
+</body>

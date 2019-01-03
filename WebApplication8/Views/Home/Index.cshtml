@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Blog Web Application</h1>
+    <p class="lead">A simple bolg web application allowing users to create,view posts and comments with different user roles.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Create new posts</h2>
+        <p>
+            Only administrator can create new posts,please register or login as a application user.
+        </p>
+        <p><a class="btn btn-default" asp-controller="Post" asp-action="Index">Go create posts&raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>View existing posts</h2>
+        <p>Any user and have views of existing posts,but only customer can add comments to posts</p>
+        <p><a class="btn btn-default"  asp-controller="Post" asp-action="PostList">Go view posts &raquo;</a></p>
+    </div>
+</div>

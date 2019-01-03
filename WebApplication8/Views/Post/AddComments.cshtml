@@ -1,0 +1,67 @@
+﻿@addTagHelper " *,Microsoft.AspNetCore.Mvc.TagHelpers"
+@using WebApplication8.Models
+
+@model WebApplication8.Models.PostDetailViewModel
+
+@{
+    ViewData["Title"] = "Comments Page";
+}
+
+<h2>AddComments</h2>
+
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Post.title)
+        </dt>
+        <dd>
+           @Html.DisplayFor(model => model.Post.title)
+        </dd>
+
+    </dl>
+</div>
+
+<table class="table">
+    <tbody>
+        @*@foreach (Comment item in Model.Comments)*@
+        @foreach (WebApplication8.Models.Comment comment in Model.Comments)
+        {
+            <tr>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.commentscontent)*@
+                    @comment.commentscontent
+                    <a asp-controller="Post" asp-action="DeleteComment" asp-route-id="@comment.commentid">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Add a new comment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddComments">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PostID" value="@Model.Post.postid" />
+            <div class="form-group">
+                <label asp-for="CommentsContent" class="control-label"></label>
+                <input asp-for="CommentsContent" class="form-control" />
+                <span asp-validation-for="CommentsContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<div>
+    <a asp-action="PostList" Back to list></a>
+</div>
