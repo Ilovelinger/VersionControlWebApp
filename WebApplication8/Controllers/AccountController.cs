@@ -34,6 +34,7 @@ namespace WebApplication5.Controllers
         /// <param name="vm"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel vm)
         {
             if (ModelState.IsValid)
@@ -81,6 +82,7 @@ namespace WebApplication5.Controllers
         /// <param name="vm"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
             if (ModelState.IsValid)
