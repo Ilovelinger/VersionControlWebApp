@@ -19,7 +19,7 @@ namespace WebApplication8.Data
             context.Database.EnsureCreated();
 
             string role1 = "Admin";
-            string desc1 = "Admin can create ,view,delete posts,and view comments";
+            string desc1 = "Admin can create,view,edit,delete posts,and view,delete comments";
 
             string role2 = "Customer";
             string desc2 = "Cutomer can view posts and add comments";
