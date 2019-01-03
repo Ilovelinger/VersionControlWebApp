@@ -21,7 +21,13 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="postid" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-controller ="Post" asp-action="PostList">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-default"  onclick="msgNotification()"/> 
+        <a asp-controller="Post" asp-action="PostList">Back to List</a>
     </form>
 </div>
+
+<script>
+    function msgNotification() {
+        alert("A post has been created successfully!")
+    }
+</script>
