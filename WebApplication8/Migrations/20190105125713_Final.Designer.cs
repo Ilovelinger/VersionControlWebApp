@@ -10,7 +10,7 @@ using WebApplication8.Data;
 namespace WebApplication8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190102141813_Final")]
+    [Migration("20190105125713_Final")]
     partial class Final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

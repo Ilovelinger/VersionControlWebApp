@@ -7,17 +7,31 @@
     ViewData["Title"] = "Comments Page";
 }
 
+<style>
+    body {
+        background-color: #d0e4fe;
+    }
+
+    p {
+        font-family: "Times New Roman";
+        font-size: 20px;
+    }
+</style>
+
 <h2>AddComments</h2>
 
 <div>
     <h4>Post</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Post.title)
-        </dt>
         <dd>
-           @Html.DisplayFor(model => model.Post.title)
+            @Html.DisplayFor(model => model.Post.title)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Post.author)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Post.content)
         </dd>
 
     </dl>
