@@ -28,6 +28,9 @@ namespace WebApplication8.Models
         public string Surname { get; set; }
 
         [Required, MaxLength(25)]
+        public string NickName { get; set; }
+
+        [Required, MaxLength(25)]
         public int MobilePhoneNumber { get; set; }
 
         [MaxLength(25)]

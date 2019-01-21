@@ -160,6 +160,8 @@ namespace WebApplication8.Migrations
 
                     b.Property<int>("MobilePhoneNumber");
 
+                    b.Property<string>("Nickname");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
@@ -243,6 +245,29 @@ namespace WebApplication8.Migrations
                     b.HasKey("matchid");
 
                     b.ToTable("Matches");
+                });
+
+            modelBuilder.Entity("WebApplication8.Models.NewMatch", b =>
+                {
+                    b.Property<int>("newMatchId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("dateTime");
+
+                    b.Property<string>("location");
+
+                    b.Property<string>("matchDescription");
+
+                    b.Property<string>("matchType");
+
+                    b.Property<string>("overtime");
+
+                    b.Property<string>("penalty");
+
+                    b.HasKey("newMatchId");
+
+                    b.ToTable("NewMatches");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

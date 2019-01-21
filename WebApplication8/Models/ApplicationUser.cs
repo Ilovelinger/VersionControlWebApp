@@ -15,6 +15,7 @@ namespace WebApplication8.Models
        
         public string Firstname { get; set; }
         public string Surname { get; set; }
+        public string Nickname { get; set; }
         public int MobilePhoneNumber { get; set; }
         public int KitNumber { get; set; }
         public string Position { get; set; }

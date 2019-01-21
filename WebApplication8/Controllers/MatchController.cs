@@ -48,7 +48,7 @@ namespace WebApplication8.Controllers
             return View(newmatchlistVM);
         }
 
-        [HttpPost, ActionName("Create")]
+        [HttpPost, ActionName("CreateNewMatch")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> NewMatchListAsync(NewMatch newmatch)
         {
@@ -63,9 +63,9 @@ namespace WebApplication8.Controllers
         public IActionResult MatchList()
         {
             MatchListViewModel matchlistVM = new MatchListViewModel();
-            //Add all the posts from the database to a list.
+           
             matchlistVM.Matches = db.Matches.ToList<Match>();
-            //Count the number of posts.
+    
             matchlistVM.NumberOfMatches = matchlistVM.Matches.Count;
 
             return View(matchlistVM);
@@ -75,11 +75,69 @@ namespace WebApplication8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MatchListAsync(Match match)
         {
-            //Add posts to the database.
+    
             db.Matches.Add(match);
             await db.SaveChangesAsync();
 
             return RedirectToAction("MatchList");
+        }
+
+        public async Task<IActionResult> NewMatchDetail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            //Database query.
+            NewMatch newmatch = await db.NewMatches
+                .SingleOrDefaultAsync(m => m.newMatchId == id);
+            if (newmatch == null)
+            {
+                return NotFound();
+            }
+
+            NewMatchDetailViewModel viewModel = await GetNewMatchDetailViewModelFromNewMatch(newmatch);
+
+            return View(viewModel);
+
+        }
+
+        /// <summary>
+        /// Add comments to their related posts,only customer can do this.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Player,CommonUser")]
+        public async Task<IActionResult> NewMatchDetail(NewMatchDetailViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {   
+                //Database query.
+                NewMatch newmatch = await db.NewMatches
+                .SingleOrDefaultAsync(m => m.newMatchId == viewModel.NewMatchID);
+
+                if (newmatch == null)
+                {
+                    return NotFound();
+                }
+                
+
+                viewModel = await GetNewMatchDetailViewModelFromNewMatch(newmatch);
+
+            }
+            return View(viewModel);
+        }
+
+        private async Task<NewMatchDetailViewModel> GetNewMatchDetailViewModelFromNewMatch(NewMatch newmatch)
+        {
+            NewMatchDetailViewModel viewModel = new NewMatchDetailViewModel();
+
+            viewModel.NewMatch = newmatch;
+
+            return viewModel;
+
         }
 
         /// <summary>
@@ -94,14 +152,14 @@ namespace WebApplication8.Controllers
                 return NotFound();
             }
             //Database query.
-            Match post = await db.Matches
+            Match match = await db.Matches
                 .SingleOrDefaultAsync(m => m.matchid == id);
-            if (post == null)
+            if (match == null)
             {
                 return NotFound();
             }
 
-            MatchDetailViewModel viewModel = await GetMatchDetailViewModelFromMatch(post);
+            MatchDetailViewModel viewModel = await GetMatchDetailViewModelFromMatch(match);
 
             return View(viewModel);
 
@@ -120,7 +178,6 @@ namespace WebApplication8.Controllers
             if (ModelState.IsValid)
             {
                 Comment comment = new Comment();
-
                 comment.commentscontent = viewModel.CommentsContent;
 
                 //Database query.
