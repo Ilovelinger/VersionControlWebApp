@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApplication8.Migrations
 {
-    public partial class Final : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,7 +42,11 @@ namespace WebApplication8.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    NickName = table.Column<string>(nullable: true)
+                    Firstname = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
+                    MobilePhoneNumber = table.Column<int>(nullable: false),
+                    KitNumber = table.Column<int>(nullable: false),
+                    Position = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,18 +54,25 @@ namespace WebApplication8.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Posts",
+                name: "Matches",
                 columns: table => new
                 {
-                    postid = table.Column<int>(nullable: false)
+                    matchid = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    title = table.Column<string>(maxLength: 20, nullable: true),
-                    author = table.Column<string>(nullable: true),
-                    content = table.Column<string>(maxLength: 500, nullable: true)
+                    team1Name = table.Column<string>(nullable: true),
+                    team2Name = table.Column<string>(nullable: true),
+                    location = table.Column<string>(nullable: true),
+                    team1Score = table.Column<int>(nullable: false),
+                    team2Score = table.Column<int>(nullable: false),
+                    dateTime = table.Column<DateTime>(nullable: false),
+                    penalty = table.Column<string>(nullable: true),
+                    overtime = table.Column<string>(nullable: true),
+                    team1PenaltyScore = table.Column<int>(nullable: false),
+                    team2PenaltyScore = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Posts", x => x.postid);
+                    table.PrimaryKey("PK_Matches", x => x.matchid);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,16 +188,16 @@ namespace WebApplication8.Migrations
                     commentid = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     commentscontent = table.Column<string>(maxLength: 200, nullable: true),
-                    RelatedPostpostid = table.Column<int>(nullable: true)
+                    RelatedMatchmatchid = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.commentid);
                     table.ForeignKey(
-                        name: "FK_Comments_Posts_RelatedPostpostid",
-                        column: x => x.RelatedPostpostid,
-                        principalTable: "Posts",
-                        principalColumn: "postid",
+                        name: "FK_Comments_Matches_RelatedMatchmatchid",
+                        column: x => x.RelatedMatchmatchid,
+                        principalTable: "Matches",
+                        principalColumn: "matchid",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -230,9 +241,9 @@ namespace WebApplication8.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_RelatedPostpostid",
+                name: "IX_Comments_RelatedMatchmatchid",
                 table: "Comments",
-                column: "RelatedPostpostid");
+                column: "RelatedMatchmatchid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -262,7 +273,7 @@ namespace WebApplication8.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Posts");
+                name: "Matches");
         }
     }
 }

@@ -1,0 +1,36 @@
+﻿@addTagHelper " *,Microsoft.AspNetCore.Mvc.TagHelpers"
+@model WebApplication8.Models.MatchListViewModel
+
+@{
+    ViewData["Title"] = "MatchList";
+}
+
+<style>
+    body {
+        background-color: #d0e4fe;
+    }
+
+    p {
+        font-family: "Times New Roman";
+        font-size: 20px;
+    }
+</style>
+
+<h2>MatchList</h2>
+
+<body>
+    There are @Model.NumberOfMatches matches
+    <ul>
+        @foreach (WebApplication8.Models.Match match in Model.Matches)
+        {
+        <li>
+            @match.team1Name @match.team1Score : @match.team2Score @match.team2Name
+            <a asp-controller="Match" asp-action="AddComments" asp-route-id="@match.matchid">View match details      </a>
+            <a asp-controller="Match" asp-action="Delete" asp-route-id="@match.matchid">Delete      </a>
+            <a asp-controller="Match" asp-action="EditMatch" asp-route-id="@match.matchid">Edit</a>
+        </li>
+            <li>    </li>
+        }
+    </ul>
+    <a asp-action="Index">Add a new match</a>
+</body>

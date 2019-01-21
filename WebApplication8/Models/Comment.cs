@@ -19,7 +19,7 @@ namespace WebApplication8.Models
         public String commentscontent { get; set; }
 
         //Create foreign key realated to post model.
-        public virtual Post RelatedPost { get; set; }
+        public virtual Match RelatedMatch { get; set; }
 
     }
 }

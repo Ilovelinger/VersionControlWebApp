@@ -13,22 +13,31 @@
 </style>
 
 <div class="jumbotron">
-    <h1>Blog Web Application</h1>
-    <p class="lead">A simple blog web application allowing users to create,view,edit,delete posts and add,delete comments with different user roles.
-    Please register or login before use.</p>
+    <h1>Web Application</h1>
+    <p class="lead">Web Application for entering sports data version 1.0</p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Create new posts</h2>
+        <h2>Add a match result</h2>
         <p>
-            Only administrator can create new posts,please register or login as a application user.
+            Add a match result for a match that has ended.
         </p>
-        <p><a class="btn btn-default" asp-controller="Post" asp-action="Index">Go create posts&raquo;</a></p>
+        <p><a class="btn btn-default" asp-controller="Match" asp-action="Index">Go &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>View existing posts</h2>
-        <p>Any user and have views of existing posts,but only customer can add comments to posts</p>
-        <p><a class="btn btn-default"  asp-controller="Post" asp-action="PostList">Go view posts &raquo;</a></p>
+        <h2>View existing matches</h2>
+        <p>View existing match results.</p>
+        <p><a class="btn btn-default" asp-controller="Match" asp-action="MatchList">Go &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>upload new upcoming matches</h2>
+        <p></p>
+        <p><a class="btn btn-default" asp-controller="Match" asp-action="AddNewMatch">Go &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>View new upcoming matches</h2>
+        <p>Go view new upcoming matches, player can register in a new match.</p>
+        <p><a class="btn btn-default" asp-controller="Match" asp-action="NewMatchList">Go &raquo;</a></p>
     </div>
 </div>

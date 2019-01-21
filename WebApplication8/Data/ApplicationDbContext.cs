@@ -17,9 +17,11 @@ namespace WebApplication8.Data
         {
         }
         
-        //Create table "Posts".
-        public DbSet<Post> Posts { get; set; }
+        //Create table "Matches".
+        public DbSet<Match> Matches { get; set; }
         //Create table "Comments".
         public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<NewMatch> NewMatches { get; set; }
     }
 }

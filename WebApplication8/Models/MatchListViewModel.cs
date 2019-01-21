@@ -8,11 +8,11 @@ namespace WebApplication8.Models
     /// <summary>
     /// This is the application post list view model
     /// </summary>
-    public class PostListViewModel
+    public class MatchListViewModel
     {
-        public int NumberOfPosts { get; set; }
+        public int NumberOfMatches { get; set; }
         //Create a list of posts.
-        public List<Post> Posts { get; set; }
+        public List<Match> Matches { get; set; }
 
     }
 }

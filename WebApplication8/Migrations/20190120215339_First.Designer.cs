@@ -10,8 +10,8 @@ using WebApplication8.Data;
 namespace WebApplication8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190105125713_Final")]
-    partial class Final
+    [Migration("20190120215339_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,11 +152,15 @@ namespace WebApplication8.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("Firstname");
+
+                    b.Property<int>("KitNumber");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("NickName");
+                    b.Property<int>("MobilePhoneNumber");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -170,7 +174,11 @@ namespace WebApplication8.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<string>("Position");
+
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<string>("Surname");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -196,35 +204,47 @@ namespace WebApplication8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("RelatedPostpostid");
+                    b.Property<int?>("RelatedMatchmatchid");
 
                     b.Property<string>("commentscontent")
                         .HasMaxLength(200);
 
                     b.HasKey("commentid");
 
-                    b.HasIndex("RelatedPostpostid");
+                    b.HasIndex("RelatedMatchmatchid");
 
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("WebApplication8.Models.Post", b =>
+            modelBuilder.Entity("WebApplication8.Models.Match", b =>
                 {
-                    b.Property<int>("postid")
+                    b.Property<int>("matchid")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("author");
+                    b.Property<DateTime>("dateTime");
 
-                    b.Property<string>("content")
-                        .HasMaxLength(500);
+                    b.Property<string>("location");
 
-                    b.Property<string>("title")
-                        .HasMaxLength(20);
+                    b.Property<string>("overtime");
 
-                    b.HasKey("postid");
+                    b.Property<string>("penalty");
 
-                    b.ToTable("Posts");
+                    b.Property<string>("team1Name");
+
+                    b.Property<int>("team1PenaltyScore");
+
+                    b.Property<int>("team1Score");
+
+                    b.Property<string>("team2Name");
+
+                    b.Property<int>("team2PenaltyScore");
+
+                    b.Property<int>("team2Score");
+
+                    b.HasKey("matchid");
+
+                    b.ToTable("Matches");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -274,9 +294,9 @@ namespace WebApplication8.Migrations
 
             modelBuilder.Entity("WebApplication8.Models.Comment", b =>
                 {
-                    b.HasOne("WebApplication8.Models.Post", "RelatedPost")
+                    b.HasOne("WebApplication8.Models.Match", "RelatedMatch")
                         .WithMany()
-                        .HasForeignKey("RelatedPostpostid");
+                        .HasForeignKey("RelatedMatchmatchid");
                 });
 #pragma warning restore 612, 618
         }

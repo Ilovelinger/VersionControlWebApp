@@ -13,7 +13,11 @@ namespace WebApplication8.Models
     {
         public ApplicationUser() : base() { }
        
-        public string NickName { get; set; }
+        public string Firstname { get; set; }
+        public string Surname { get; set; }
+        public int MobilePhoneNumber { get; set; }
+        public int KitNumber { get; set; }
+        public string Position { get; set; }
 
     }
 }

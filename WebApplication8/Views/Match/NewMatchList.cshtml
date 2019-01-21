@@ -1,0 +1,22 @@
+﻿@addTagHelper " *,Microsoft.AspNetCore.Mvc.TagHelpers"
+@model WebApplication8.Models.NewMatchListViewModel
+
+@{
+    ViewData["Title"] = "NewMatchList";
+}
+
+<h2>NewMatchList</h2>
+
+<body>
+    <ul>
+        @foreach (WebApplication8.Models.NewMatch newmatch in Model.NewMatches)
+        {
+            <li>
+                @newmatch.matchType   @newmatch.dateTime
+                <a asp-controller="Match" asp-action="Match" asp-route-id="@newmatch.newMatchId">View new match details</a>
+            </li>
+            <li>    </li>
+        }
+    </ul>
+    <a asp-controller="Match" asp-action="MatchList"> Go to match results page</a>
+</body>

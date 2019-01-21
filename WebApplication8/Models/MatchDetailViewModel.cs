@@ -8,16 +8,16 @@ namespace WebApplication8.Models
     /// <summary>
     /// This is the application post detail view model,with comments' content in the designated post.
     /// </summary>
-    public class PostDetailViewModel
+    public class MatchDetailViewModel
     {
-        public Post Post { get; set; }
+        public Match Match { get; set; }
 
         public List<Comment> Comments { get; set; }
 
-        public int PostID { get; set; }
+        public int MatchID { get; set; }
         public string CommentsContent { get; set; }
 
-        public PostDetailViewModel()
+        public MatchDetailViewModel()
         {
             Comments = new List<Comment>();
         }

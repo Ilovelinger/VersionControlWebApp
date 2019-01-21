@@ -19,10 +19,13 @@ namespace WebApplication8.Data
             context.Database.EnsureCreated();
 
             string role1 = "Admin";
-            string desc1 = "Admin can create,view,edit,delete posts,and view,delete comments";
+            string desc1 = "Admin can do everything";
 
-            string role2 = "Customer";
-            string desc2 = "Cutomer can view posts and add comments";
+            string role2 = "Player";
+            string desc2 = "Null";
+
+            string role3 = "CommonUser";
+            string desc3 = "Null";
 
             string password = "Password123!";
 
@@ -34,14 +37,18 @@ namespace WebApplication8.Data
             {
                 await roleManager.CreateAsync(new ApplicationRole(role2,desc2));
             }
+            if (await roleManager.FindByNameAsync(role3) == null)
+            {
+                await roleManager.CreateAsync(new ApplicationRole(role3, desc3));
+            }
 
             //Create user Memeber1
-            if (await userManager.FindByNameAsync("Member1@Email.com") == null)
+            if (await userManager.FindByNameAsync("Admin@Email.com") == null)
             {
                 var user = new ApplicationUser
                 {
-                    UserName = "Member1@Email.com",
-                    Email = "Member1@Email.com",
+                    UserName = "Admin@Email.com",
+                    Email = "Admin@Email.com",
                 };
 
                 var result = await userManager.CreateAsync(user);
@@ -53,12 +60,12 @@ namespace WebApplication8.Data
             }
 
             //Create user Customer1
-            if (await userManager.FindByNameAsync("Customer1@Email.com") == null)
+            if (await userManager.FindByNameAsync("Player1@Email.com") == null)
             {
                 var user = new ApplicationUser
                 {
-                    UserName = "Customer1@Email.com",
-                    Email = "Customer1@Email.com",
+                    UserName = "Player1@Email.com",
+                    Email = "Player1@Email.com",
                 };
 
                 var result = await userManager.CreateAsync(user);
@@ -70,70 +77,19 @@ namespace WebApplication8.Data
             }
 
             //Create user Customer2
-            if (await userManager.FindByNameAsync("Customer2@Email.com") == null)
+            if (await userManager.FindByNameAsync("User1@Email.com") == null)
             {
                 var user = new ApplicationUser
                 {
-                    UserName = "Customer2@Email.com",
-                    Email = "Customer2@Email.com",
+                    UserName = "User1@Email.com",
+                    Email = "User1@Email.com",
                 };
 
                 var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
                     await userManager.AddPasswordAsync(user, password);
-                    await userManager.AddToRoleAsync(user, role2);
-                }
-            }
-
-            //Create user Customer3
-            if (await userManager.FindByNameAsync("Customer3@Email.com") == null)
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = "Customer3@Email.com",
-                    Email = "Customer3@Email.com",
-                };
-
-                var result = await userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    await userManager.AddPasswordAsync(user, password);
-                    await userManager.AddToRoleAsync(user, role2);
-                }
-            }
-
-            //Create user Customer4
-            if (await userManager.FindByNameAsync("Customer4@Email.com") == null)
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = "Customer4@Email.com",
-                    Email = "Customer4@Email.com",
-                };
-
-                var result = await userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    await userManager.AddPasswordAsync(user, password);
-                    await userManager.AddToRoleAsync(user, role2);
-                }
-            }
-
-            //Create user Customer5
-            if (await userManager.FindByNameAsync("Customer5@Email.com") == null)
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = "Customer5@Email.com",
-                    Email = "Customer5@Email.com",
-                };
-
-                var result = await userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    await userManager.AddPasswordAsync(user, password);
-                    await userManager.AddToRoleAsync(user, role2);
+                    await userManager.AddToRoleAsync(user, role3);
                 }
             }
         }

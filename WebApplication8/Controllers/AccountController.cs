@@ -46,15 +46,15 @@ namespace WebApplication5.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (vm.UserRole == "Admin")
+                    if (vm.UserRole == "Player")
                     {
                         //Assign a role to the user
-                        await _userManager.AddToRoleAsync(user,"Admin");
+                        await _userManager.AddToRoleAsync(user,"Player");
                     }
-                    else if (vm.UserRole == "Customer")
+                    else if (vm.UserRole == "CommonUser")
                     {
                         //Assign a role to the user
-                        await _userManager.AddToRoleAsync(user, "Customer");
+                        await _userManager.AddToRoleAsync(user, "CommonUser");
                     }
                     await _signinManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");

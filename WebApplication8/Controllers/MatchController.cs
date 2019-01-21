@@ -12,14 +12,14 @@ using Microsoft.AspNetCore.Authorization;
 namespace WebApplication8.Controllers
 {
     /// <summary>
-    /// This is the post controller of the application,for managing add,delete posts,add comments with authorizations.
+    /// This is the match controller of the application,for managing add,delete posts,add comments with authorizations.
     /// </summary>
-    public class PostController : Controller
+    public class MatchController : Controller
     {
         //Add a reference to the database I created
         private readonly ApplicationDbContext db;
 
-        public PostController(ApplicationDbContext _db)
+        public MatchController(ApplicationDbContext _db)
         {
             db = _db;
         }
@@ -28,35 +28,62 @@ namespace WebApplication8.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
-            return View("PostPage");
+            return View("MatchPage");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AddNewMatch()
+        {
+            return View("AddNewMatch");
+        }
 
         [HttpGet]
-        public IActionResult PostList()
+        public IActionResult NewMatchList()
         {
-            PostListViewModel postlistVM = new PostListViewModel();
+            NewMatchListViewModel newmatchlistVM = new NewMatchListViewModel();
             //Add all the posts from the database to a list.
-            postlistVM.Posts = db.Posts.ToList<Post>();
-            //Count the number of posts.
-            postlistVM.NumberOfPosts = postlistVM.Posts.Count;
+            newmatchlistVM.NewMatches = db.NewMatches.ToList<NewMatch>();
 
-            return View(postlistVM);
+            return View(newmatchlistVM);
+        }
+
+        [HttpPost, ActionName("Create")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NewMatchListAsync(NewMatch newmatch)
+        {
+            //Add posts to the database.
+            db.NewMatches.Add(newmatch);
+            await db.SaveChangesAsync();
+
+            return RedirectToAction("NewMatchList");
+        }
+
+        [HttpGet]
+        public IActionResult MatchList()
+        {
+            MatchListViewModel matchlistVM = new MatchListViewModel();
+            //Add all the posts from the database to a list.
+            matchlistVM.Matches = db.Matches.ToList<Match>();
+            //Count the number of posts.
+            matchlistVM.NumberOfMatches = matchlistVM.Matches.Count;
+
+            return View(matchlistVM);
         }
 
         [HttpPost,ActionName("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostListAsync(Post post)
+        public async Task<IActionResult> MatchListAsync(Match match)
         {
             //Add posts to the database.
-            db.Posts.Add(post);
+            db.Matches.Add(match);
             await db.SaveChangesAsync();
 
-            return RedirectToAction("PostList");
+            return RedirectToAction("MatchList");
         }
 
         /// <summary>
-        /// Takes an id as input, check if the id and related post exist.
+        /// Takes an id as input, check if the id and related match exist.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -67,14 +94,14 @@ namespace WebApplication8.Controllers
                 return NotFound();
             }
             //Database query.
-            Post post = await db.Posts
-                .SingleOrDefaultAsync(m => m.postid == id);
+            Match post = await db.Matches
+                .SingleOrDefaultAsync(m => m.matchid == id);
             if (post == null)
             {
                 return NotFound();
             }
 
-            PostDetailViewModel viewModel = await GetPostDetailViewModelFromPost(post);
+            MatchDetailViewModel viewModel = await GetMatchDetailViewModelFromMatch(post);
 
             return View(viewModel);
 
@@ -87,8 +114,8 @@ namespace WebApplication8.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> AddComments([Bind("PostID,CommentsContent")]PostDetailViewModel viewModel)
+        [Authorize(Roles = "Admin,Player,CommonUser")]
+        public async Task<IActionResult> AddComments([Bind("MatchID,CommentsContent")]MatchDetailViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -97,20 +124,20 @@ namespace WebApplication8.Controllers
                 comment.commentscontent = viewModel.CommentsContent;
 
                 //Database query.
-                Post post = await db.Posts
-                .SingleOrDefaultAsync(m => m.postid == viewModel.PostID);
+                Match match = await db.Matches
+                .SingleOrDefaultAsync(m => m.matchid == viewModel.MatchID);
 
-                if (post == null)
+                if (match == null)
                 {
                     return NotFound();
                 }
 
-                comment.RelatedPost = post;
+                comment.RelatedMatch = match;
                 //Add the comments to the database.
                 db.Comments.Add(comment);
                 await db.SaveChangesAsync();
 
-                viewModel = await GetPostDetailViewModelFromPost(post);
+                viewModel = await GetMatchDetailViewModelFromMatch(match);
 
             }
             return View(viewModel);
@@ -119,16 +146,16 @@ namespace WebApplication8.Controllers
         /// <summary>
         /// Take comments from the databse and add them to a list.
         /// </summary>
-        /// <param name="post"></param>
+        /// <param name="match"></param>
         /// <returns></returns>
-        private async Task<PostDetailViewModel> GetPostDetailViewModelFromPost(Post post)
+        private async Task<MatchDetailViewModel> GetMatchDetailViewModelFromMatch(Match match)
         {
-            PostDetailViewModel viewModel = new PostDetailViewModel();
+            MatchDetailViewModel viewModel = new MatchDetailViewModel();
 
-            viewModel.Post = post;
+            viewModel.Match = match;
 
             List<Comment> comments = await db.Comments
-                .Where(m => m.RelatedPost == post).ToListAsync();
+                .Where(m => m.RelatedMatch == match).ToListAsync();
 
             viewModel.Comments = comments;
             return viewModel;
@@ -136,38 +163,38 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Take an id as input,check if the id and its related post exist.
+        /// Take an id as input,check if the id and its related match exist.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> EditPost(int? id)
+        public async Task<IActionResult> EditMatch(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var post = await db.Posts.FindAsync(id);
-            if (post == null)
+            var match = await db.Matches.FindAsync(id);
+            if (match == null)
             {
                 return NotFound();
             }
-            return View(post);
+            return View(match);
         }
 
         /// <summary>
-        /// Edit the designated post,update the database.
+        /// Edit the designated match,update the database.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="post"></param>
         /// <returns></returns>
-        [HttpPost,ActionName("EditPost")]
+        [HttpPost,ActionName("EditMatch")]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(int id, [Bind("postid,title,author,content")] Post post)
+        public async Task<IActionResult> EditMatch(int id, Match match)
         {
-            if (id != post.postid)
+            if (id != match.matchid)
             {
                 return NotFound();
             }
@@ -176,12 +203,12 @@ namespace WebApplication8.Controllers
             {
                 try
                 {
-                    db.Update(post);
+                    db.Update(match);
                     await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PostExists(post.postid))
+                    if (!MatchExists(match.matchid))
                     {
                         return NotFound();
                     }
@@ -190,13 +217,13 @@ namespace WebApplication8.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(PostList));
+                return RedirectToAction(nameof(MatchList));
             }
-            return View(post);
+            return View(match);
         }
 
         /// <summary>
-        /// Takes an id of the post that need to be deleted as input, check if the id and related post exist。
+        /// Takes an id of the match that need to be deleted as input, check if the id and related match exist。
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -208,18 +235,18 @@ namespace WebApplication8.Controllers
                 return NotFound();
             }
 
-            var post = await db.Posts
-                .FirstOrDefaultAsync(m => m.postid == id);
-            if (post == null)
+            var match = await db.Matches
+                .FirstOrDefaultAsync(m => m.matchid == id);
+            if (match == null)
             {
                 return NotFound();
             }
 
-            return View(post);
+            return View(match);
         }
 
         /// <summary>
-        /// Delete the designated post from database,only admin can do this.
+        /// Delete the designated match from database,only admin can do this.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -228,15 +255,15 @@ namespace WebApplication8.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var post = await db.Posts.FindAsync(id);
-            db.Posts.Remove(post);
+            var match = await db.Matches.FindAsync(id);
+            db.Matches.Remove(match);
             await db.SaveChangesAsync();
-            return RedirectToAction(nameof(PostList));
+            return RedirectToAction(nameof(MatchList));
         }
 
-        private bool PostExists(int id)
+        private bool MatchExists(int id)
         {
-            return db.Posts.Any(e => e.postid == id);
+            return db.Matches.Any(e => e.matchid == id);
         }
 
         /// <summary>
@@ -275,7 +302,7 @@ namespace WebApplication8.Controllers
             var comment = await db.Comments.FindAsync(id);
             db.Comments.Remove(comment);
             await db.SaveChangesAsync();
-            return RedirectToAction(nameof(PostList));
+            return RedirectToAction(nameof(MatchList));
         }
 
         private bool CommentExists(int id)

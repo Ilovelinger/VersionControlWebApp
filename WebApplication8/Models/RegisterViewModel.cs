@@ -21,15 +21,27 @@ namespace WebApplication8.Models
         [Compare("Password", ErrorMessage = "Password not match")]
         public string ConfirmPassword { get; set; }
 
-        [Required,MinLength(2), MaxLength(25)]
-        public string NickName { get; set; }
+        [Required,MaxLength(25)]
+        public string Firstname { get; set; }
+
+        [Required,MaxLength(25)]
+        public string Surname { get; set; }
+
+        [Required, MaxLength(25)]
+        public int MobilePhoneNumber { get; set; }
+
+        [MaxLength(25)]
+        public int KitNumber { get; set; }
+
+        [MaxLength(25)]
+        public string Position { get; set; }
 
         public String UserRole { get; set; }
     }
 
     public enum UserRole
     {
-        Admin,
-        Customer
+        Player,
+        CommonUser
     }
 }
