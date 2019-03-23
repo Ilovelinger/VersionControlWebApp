@@ -4,11 +4,14 @@
 
 <style>
     body {
-        /*background-image: url('../../Image/football1.jpg');
+        background-image: url(/images/football2.jpeg);
         background-repeat: no-repeat;
-        background-attachment: fixed;*/
-        background-color: darkseagreen;
+        background-size: cover;
+        /*background-attachment: fixed;*/
+        /*background-size: 300px 100px;*/
+        /*background-color: darkseagreen;*/
     }
+
     p {
         font-family: "Times New Roman";
         font-size: 20px;
@@ -17,30 +20,82 @@
 
 <div class="text-center">
     <h1>Welcome!</h1>
-    <p class="lead">a web application for entering sports data version 1.0</p>
+    <p class="lead">A web application for entering sports data version 1.1</p>
 </div>
 
+<style>
+.divcss5{float:left;width:180px;height:500px;border:3px solid rgba(0, 0, 0, 0.43)}
+</style>
+
 <div class="row">
-    <div class="col-md-4">
-        <h2>Add a match result</h2>
+    <div class="divcss5" onclick="OnClick5()">
+        <h2>View existing teams>>></h2>
+        <p>Go view existing teams and team details</p>
+    </div>
+    <div class="divcss5" onclick="OnClick1()">
+        <h2>Add a match result>>></h2>
         <p>
             Add a match result for a match that has ended.
         </p>
-        <p><a class="btn btn-default" asp-controller="Match" asp-action="Index">Go &raquo;</a></p>
+        @*<p><a class="btn btn-default" asp-controller="Match" asp-action="Index">Go &raquo;</a></p>*@
     </div>
-    <div class="col-md-4">
-        <h2>View existing matches</h2>
+    <div class="divcss5" onclick="OnClick2()">
+        <h2>View existing matches>>></h2>
         <p>View existing match results.</p>
-        <p><a class="btn btn-default" asp-controller="Match" asp-action="MatchList">Go &raquo;</a></p>
+        @*<p><a class="btn btn-default" asp-controller="Match" asp-action="MatchList">Go &raquo;</a></p>*@
     </div>
-    <div class="col-md-4">
-        <h2>Upload a new upcoming match</h2>
+    <div class="divcss5" onclick="OnClick3()">
+        <h2>Upload a new upcoming match>>></h2>
         <p></p>
-        <p><a class="btn btn-default" asp-controller="Match" asp-action="AddNewMatch">Go &raquo;</a></p>
+        @*<p><a class="btn btn-default" asp-controller="Match" asp-action="AddNewMatch">Go &raquo;</a></p>*@
     </div>
-    <div class="col-md-4">
-        <h2>View new upcoming matches</h2>
+    <div class="divcss5" onclick="OnClick4()">
+        <h2>View new upcoming matches>>></h2>
         <p>Go view new upcoming matches, player can register in a new match.</p>
-        <p><a class="btn btn-default" asp-controller="Match" asp-action="NewMatchList">Go &raquo;</a></p>
+        @*<p><a class="btn btn-default" asp-controller="Match" asp-action="NewMatchList">Go &raquo;</a></p>*@
+    </div>
+    <div class="divcss5">
+        <h2>External links</h2>
+        <div>
+            <a href="https://www.premierleague.com/home"><font size="5" color="black">PremireLeague</font></a>
+        </div>
+        <div>
+            <a href="https://www.laliga.es/en"><font size="5" color="black">La Liga</font></a>
+        </div>
+        <div>
+            <a href="http://www.legaseriea.it/en"><font size="5" color="black">Seria A</font></a>
+        </div>
+        <div>
+            <a href="https://www.bundesliga.com/en/bundesliga"><font size="5" color="black">Bundesliga</font></a>
+        </div>
+        <div>
+            <a href="https://www.ligue1.com/"><font size="5" color="black">Ligue 1</font></a>
+        </div>
+        <div>
+            <a href="https://www.whoscored.com/Statistics"><font size="5" color="black">Pro Football Stats</font></a>
+        </div>
     </div>
 </div>
+
+
+<script>
+    function OnClick1() {
+        window.location.href = "/Match/Index";
+    }
+
+    function OnClick2() {
+        window.location.href = "/Match/MatchList";
+    }
+
+    function OnClick3() {
+        window.location.href = "/Match/AddNewMatch";
+    }
+
+    function OnClick4() {
+        window.location.href = "/Match/NewMatchList";
+    }
+    function OnClick5() {
+        window.location.href = "/Teams/Index";
+    }
+
+</script>

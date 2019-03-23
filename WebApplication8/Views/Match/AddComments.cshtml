@@ -1,5 +1,11 @@
 ﻿@addTagHelper " *,Microsoft.AspNetCore.Mvc.TagHelpers"
 @using WebApplication8.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
 
 @model WebApplication8.Models.MatchDetailViewModel
 
@@ -52,13 +58,14 @@
 
 <table class="table">
     <tbody>
-        @*@foreach (Comment item in Model.Comments)*@
         @foreach (WebApplication8.Models.Comment comment in Model.Comments)
         {
             <tr>
                 <td>
-                    @*@Html.DisplayFor(modelItem => item.commentscontent)*@
-                    @comment.commentscontent
+                        @*@UserManager.GetUserName(User):*@
+                        @*@Html.DisplayFor(model=>model.ApplicationUser.Nickname):*@
+                        @comment.commentUsername:
+                        @comment.commentscontent
                     <a asp-controller="Match" asp-action="DeleteComment" asp-route-id="@comment.commentid">Delete</a>
                 </td>
             </tr>

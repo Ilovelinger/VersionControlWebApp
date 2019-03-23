@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication8.Models
 {
-    /// <summary>
-    /// This is the application post model with post attributes.
-    /// </summary>
+
     public class Match
     {
         [Key]
@@ -27,5 +25,17 @@ namespace WebApplication8.Models
         public int team1PenaltyScore { get; set; }
         public int team2PenaltyScore { get; set; }
 
+    }
+
+    public enum penalty
+    {
+        Yes,
+        No
+    }
+
+    public enum overtime
+    {
+        Yes,
+        No
     }
 }

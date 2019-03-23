@@ -9,6 +9,7 @@ using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 using WebApplication8.Data;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace WebApplication8.Controllers
 {
     /// <summary>
@@ -179,6 +180,7 @@ namespace WebApplication8.Controllers
             {
                 Comment comment = new Comment();
                 comment.commentscontent = viewModel.CommentsContent;
+                comment.commentUsername = HttpContext.User.Identity.Name.ToString();
 
                 //Database query.
                 Match match = await db.Matches

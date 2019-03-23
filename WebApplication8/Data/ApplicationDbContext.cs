@@ -23,5 +23,7 @@ namespace WebApplication8.Data
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<NewMatch> NewMatches { get; set; }
+
+        public DbSet<WebApplication8.Models.Team> Team { get; set; }
     }
 }

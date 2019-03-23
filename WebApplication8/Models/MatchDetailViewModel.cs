@@ -12,10 +12,14 @@ namespace WebApplication8.Models
     {
         public Match Match { get; set; }
 
+        public ApplicationUser ApplicationUser { get; set; }
+
         public List<Comment> Comments { get; set; }
 
         public int MatchID { get; set; }
         public string CommentsContent { get; set; }
+
+        public string commentUsername { get; set; }
 
         public MatchDetailViewModel()
         {

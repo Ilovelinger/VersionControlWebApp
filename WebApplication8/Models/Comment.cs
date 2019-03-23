@@ -18,6 +18,8 @@ namespace WebApplication8.Models
         [MinLength(5), MaxLength(200)]
         public String commentscontent { get; set; }
 
+        public String commentUsername{ get; set; }
+
         //Create foreign key realated to post model.
         public virtual Match RelatedMatch { get; set; }
 

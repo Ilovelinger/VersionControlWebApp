@@ -16,8 +16,20 @@ namespace WebApplication8.Models
         public String matchType { get; set; }
         public DateTime dateTime { get; set; }
         public string location { get; set; }
-        public String penalty { get; set; }
-        public String overtime { get; set; }
+        public String Penalty { get; set; }
+        public String Overtime { get; set; }
         public String matchDescription {get; set; }
+    }
+
+    public enum Penalty
+    {
+        Yes,
+        No
+    }
+
+    public enum Overtime
+    {
+        Yes,
+        No
     }
 }

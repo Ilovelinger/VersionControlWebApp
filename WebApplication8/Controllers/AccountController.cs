@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication8.Data;
 using WebApplication8.Models;
+using System.Web;
+
 
 namespace WebApplication5.Controllers
 {   
@@ -15,6 +18,13 @@ namespace WebApplication5.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signinManager;
+
+        //private readonly ApplicationDbContext db;
+
+        //public AccountController(ApplicationDbContext _db)
+        //{
+        //    db = _db;
+        //}
 
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
@@ -40,7 +50,7 @@ namespace WebApplication5.Controllers
             if (ModelState.IsValid)
             {
                 //Take the email address input as user name and email
-                var user = new ApplicationUser { UserName = vm.Email, Email = vm.Email };
+                var user = new ApplicationUser { UserName = vm.Email, Email = vm.Email,Nickname = vm.NickName, Firstname = vm.Firstname, Surname = vm.Surname, Position = vm.Position };
                 //Save the password input as the password of the user's account 
                 var result = await _userManager.CreateAsync(user, vm.Password);
 
@@ -91,6 +101,8 @@ namespace WebApplication5.Controllers
                 var result = await _signinManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
                 if (result.Succeeded)
                 {
+
+                    //string loginUserName = HttpContext.User.Identity.Name.ToString();
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Invalid Login Attemt");
