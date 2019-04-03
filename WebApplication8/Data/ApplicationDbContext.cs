@@ -25,5 +25,6 @@ namespace WebApplication8.Data
         public DbSet<NewMatch> NewMatches { get; set; }
 
         public DbSet<WebApplication8.Models.Team> Team { get; set; }
+
     }
 }

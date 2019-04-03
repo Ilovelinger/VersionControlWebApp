@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace WebApplication8.Models
     /// </summary>
     public class RegisterViewModel
     {
-        [Required, EmailAddress,Display(Name = "Email Address")]
+        [Required, EmailAddress, Display(Name = "Email Address")]
         public string Email { get; set; }
 
         [Required, DataType(DataType.Password), Display(Name = "Password")]
@@ -33,13 +34,16 @@ namespace WebApplication8.Models
         [Required]
         public int MobilePhoneNumber { get; set; }
 
-  
+
         public int KitNumber { get; set; }
 
         public string Position { get; set; }
 
         public String UserRole { get; set; }
+
+        public IFormFile AvatarImage { get; set; }
     }
+
 
     public enum UserRole
     {
@@ -47,3 +51,4 @@ namespace WebApplication8.Models
         CommonUser
     }
 }
+

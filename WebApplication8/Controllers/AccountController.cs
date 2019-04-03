@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using WebApplication8.Data;
 using WebApplication8.Models;
 using System.Web;
-
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebApplication5.Controllers
 {   
@@ -18,6 +20,7 @@ namespace WebApplication5.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signinManager;
+
 
         //private readonly ApplicationDbContext db;
 
@@ -45,12 +48,21 @@ namespace WebApplication5.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel vm)
+        public async Task<IActionResult> Register(RegisterViewModel vm,IFormFile file)
         {
+            //ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 //Take the email address input as user name and email
                 var user = new ApplicationUser { UserName = vm.Email, Email = vm.Email,Nickname = vm.NickName, Firstname = vm.Firstname, Surname = vm.Surname, Position = vm.Position };
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(memoryStream);
+                    user.AvatarImage = memoryStream.ToArray();
+
+                }
+
                 //Save the password input as the password of the user's account 
                 var result = await _userManager.CreateAsync(user, vm.Password);
 

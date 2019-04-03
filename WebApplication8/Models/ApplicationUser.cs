@@ -20,6 +20,8 @@ namespace WebApplication8.Models
         public int KitNumber { get; set; }
         public string Position { get; set; }
 
+        public byte[] AvatarImage { get; set; }
+
         public virtual Team RelatedTeam { get; set; }
 
     }

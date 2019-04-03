@@ -6,7 +6,7 @@
 
 <h2>Register Page</h2>
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-4">
         <form method="post">
             <h4>Create a new account.</h4>
@@ -67,10 +67,88 @@
                 <input asp-for="Position" class="form-control" />
                 <span asp-validation-for="Position" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <p>Upload your profile image</p>
+                    <input type="file" name="files" multiple />
+                </div>
+            </div>
             <button type="submit" class="btn btn-default">Register</button>
         </form>
     </div>
-</div>
+</div>*@
+
+<form method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="Register">
+    <h4>Create a new account.</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        @Html.DropDownList("UserRole",
+                   new SelectList(Enum.GetValues(typeof(UserRole))),
+                   "Select Role",
+                   new
+                   {
+                       @class = "custom-class-for-width",
+                       style = "width: 60px,length: 30px"
+                   })
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword">Confirm password</label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Firstname">Firstname</label>
+        <input asp-for="Firstname" class="form-control" />
+        <span asp-validation-for="Firstname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Surname">Surname</label>
+        <input asp-for="Surname" class="form-control" />
+        <span asp-validation-for="Surname" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NickName">Nickname</label>
+        <input asp-for="NickName" class="form-control" />
+        <span asp-validation-for="NickName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MobilePhoneNumber">Mobile-phone number</label>
+        <input asp-for="MobilePhoneNumber" class="form-control" />
+        <span asp-validation-for="MobilePhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="KitNumber">Kit number(leave it blank if you are not a player)</label>
+        <input asp-for="KitNumber" class="form-control" />
+        <span asp-validation-for="KitNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Position">Position(leave it blank if you are not a player)</label>
+        <input asp-for="Position" class="form-control" />
+        <span asp-validation-for="Position" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>Upload one or more files using this form:</p>
+            <input type="file" name="file" multiple />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Upload" />
+        </div>
+    </div>
+</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
