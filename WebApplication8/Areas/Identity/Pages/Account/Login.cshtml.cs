@@ -18,9 +18,11 @@ namespace WebApplication8.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
         {
+            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -77,8 +79,17 @@ namespace WebApplication8.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+
+                    return RedirectToAction("DoWork", "Account");
+                    //if (User.Identity.IsAuthenticated) {
+                    //    var userid = _userManager.GetUserId(HttpContext.User);
+                    //    ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+                    //    TempData["tempUserName"] = user.Email.ToString();
+                    //}
+
+                    //HttpContext.Session.SetString("tempName", user.Nickname);
+                    //_logger.LogInformation("User logged in.");
+                    //return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

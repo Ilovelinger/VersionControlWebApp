@@ -13,6 +13,7 @@
     ViewData["Title"] = "Comments Page";
 }
 
+
 <style>
     body {
         background-color: darkseagreen;
@@ -62,10 +63,10 @@
         {
             <tr>
                 <td>
-                        @*@UserManager.GetUserName(User):*@
-                        @*@Html.DisplayFor(model=>model.ApplicationUser.Nickname):*@
-                        @comment.commentUsername:
-                        @comment.commentscontent
+                    @*@UserManager.GetUserName(User):*@
+                    @*@Html.DisplayFor(model=>model.ApplicationUser.Nickname):*@
+                    @comment.commentUsername:
+                    @comment.commentscontent
                     <a asp-controller="Match" asp-action="DeleteComment" asp-route-id="@comment.commentid">Delete</a>
                 </td>
             </tr>

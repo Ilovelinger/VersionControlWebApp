@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication8.Models;
 
@@ -13,6 +14,7 @@ namespace WebApplication8.Controllers
     /// </summary>
     public class HomeController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return View();

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 using WebApplication8.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Principal;
 
 
 namespace WebApplication8.Controllers
@@ -180,7 +181,10 @@ namespace WebApplication8.Controllers
             {
                 Comment comment = new Comment();
                 comment.commentscontent = viewModel.CommentsContent;
-                comment.commentUsername = HttpContext.User.Identity.Name.ToString();
+                //comment.commentUsername = HttpContext.User.Identity.Name.ToString();
+                if(TempData["tempUserName"]!=null)
+                comment.commentUsername = TempData["tempUserName"].ToString();
+
 
                 //Database query.
                 Match match = await db.Matches

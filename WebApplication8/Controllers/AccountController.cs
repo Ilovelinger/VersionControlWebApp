@@ -113,15 +113,37 @@ namespace WebApplication5.Controllers
                 var result = await _signinManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
                 if (result.Succeeded)
                 {
+                    var userid = _userManager.GetUserId(HttpContext.User);
+                    ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+                    //HttpContext.Session.SetString("tempName", user.Nickname);
+                    TempData["tempUserName"] = user.Email;
 
-                    //string loginUserName = HttpContext.User.Identity.Name.ToString();
                     return RedirectToAction("Index", "Home");
                 }
+
                 ModelState.AddModelError("", "Invalid Login Attemt");
                 return View(vm);
 
             }
             return View(vm);
+        }
+
+        public async Task<ActionResult> DoWork() 
+
+        {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userid = _userManager.GetUserId(HttpContext.User);
+                ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+                TempData["tempUserName"] = user.Nickname.ToString();
+            }
+
+            //HttpContext.Session.SetString("tempName", user.Nickname);
+            //_logger.LogInformation("User logged in.");
+            return RedirectToAction("Index", "Home");
+
+
         }
     }
 }

@@ -6,6 +6,11 @@
 
 <h4>@ViewData["Title"]</h4>
 @Html.Partial("_StatusMessage", Model.StatusMessage)
+
+
+<img src="@ViewData["MyPic"]" width="120" height="120" />
+<h5>Profile Image</h5>
+
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
@@ -35,10 +40,36 @@
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Input.Surname"></label>
+                <input asp-for="Input.Surname" class="form-control" />
+                <span asp-validation-for="Input.Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Firstname"></label>
+                <input asp-for="Input.Firstname" class="form-control" />
+                <span asp-validation-for="Input.Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NickName"></label>
+                <input asp-for="Input.NickName" class="form-control" />
+                <span asp-validation-for="Input.NickName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Position"></label>
+                <input asp-for="Input.Position" class="form-control" />
+                <span asp-validation-for="Input.Position" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.KitNumber"></label>
+                <input asp-for="Input.KitNumber" class="form-control" />
+                <span asp-validation-for="Input.KitNumber" class="text-danger"></span>
+            </div>
             <button type="submit" class="btn btn-default">Save</button>
         </form>
     </div>
 </div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

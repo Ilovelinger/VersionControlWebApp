@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,21 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            public string Firstname { get; set; }
+
+            [Required]
+            public string Surname { get; set; }
+
+            [Required]
+            public string NickName { get; set; }
+
+            public int KitNumber { get; set; }
+
+            public string MyPic { get; set; }
+
+            public string Position { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -63,8 +79,16 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
+            string temp_inBase64 = Convert.ToBase64String(user.AvatarImage);
+            ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);
+
             Input = new InputModel
             {
+                Firstname = user.Firstname,
+                Surname = user.Surname,
+                NickName = user.Nickname,
+                KitNumber = user.KitNumber,
+                Position = user.Position,
                 Email = email,
                 PhoneNumber = phoneNumber
             };
@@ -85,6 +109,31 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            if (Input.Surname != user.Surname)
+            {
+                user.Surname = Input.Surname;
+            }
+
+            if (Input.Firstname != user.Firstname)
+            {
+                user.Firstname = Input.Firstname;
+            }
+
+            if (Input.NickName != user.Nickname)
+            {
+                user.Nickname = Input.NickName;
+            }
+
+            if (Input.KitNumber != user.KitNumber)
+            {
+                user.KitNumber = Input.KitNumber;
+            }
+
+            if (Input.Position != user.Position)
+            {
+                user.Position = Input.Position;
             }
 
             var email = await _userManager.GetEmailAsync(user);
@@ -108,6 +157,8 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
                     throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
