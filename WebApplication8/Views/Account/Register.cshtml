@@ -118,6 +118,11 @@
         <span asp-validation-for="Surname" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="FullName">FullName</label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="NickName">Nickname</label>
         <input asp-for="NickName" class="form-control" />
         <span asp-validation-for="NickName" class="text-danger"></span>
@@ -134,6 +139,14 @@
     </div>
     <div class="form-group">
         <label asp-for="Position">Position(leave it blank if you are not a player)</label>
+        @*@Html.DropDownList("Postion",
+            new SelectList(Enum.GetValues(typeof(Position))),
+            "",
+            new
+            {
+                @class = "custom-class-for-width",
+                style = "width: 60px,length: 30px"
+            })*@
         <input asp-for="Position" class="form-control" />
         <span asp-validation-for="Position" class="text-danger"></span>
     </div>

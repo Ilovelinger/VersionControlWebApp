@@ -32,6 +32,10 @@ namespace WebApplication8.Models
         public string NickName { get; set; }
 
         [Required]
+        public string FullName { get; set; }
+
+
+        [Required]
         public int MobilePhoneNumber { get; set; }
 
 
@@ -50,5 +54,21 @@ namespace WebApplication8.Models
         Player,
         CommonUser
     }
+
+    //public enum Position
+    //{
+    //    Centre_back,
+    //    Sweeper,
+    //    Full_back,
+    //    Wing_back,
+    //    Centremidfield,
+    //    Defensive_midfield,
+    //    Attacking_midfield,
+    //    Wide_midfield,
+    //    Centre_forward,
+    //    Second_striker,
+    //    Winger,
+    //    Goalkeeper
+    //}
 }
 

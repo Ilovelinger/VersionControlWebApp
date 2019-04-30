@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication8.Data;
 using WebApplication8.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication8.Controllers
 {
@@ -41,7 +42,93 @@ namespace WebApplication8.Controllers
                 return NotFound();
             }
 
-            return View(team);
+            //string userid = HttpContext.Session.GetString("tempUserId");
+
+            //if (userid == null)
+            //    return NotFound();
+
+            //ApplicationUser user = await _context.Users.SingleOrDefaultAsync(m => m.Id == userid);
+
+            //if (user.Nickname != null)
+            //    return NotFound();
+
+            if (HttpContext.Session.GetString("isRegistered") == "No")
+            {
+                ViewData["ShowButton"] = true;
+            }
+
+            if(HttpContext.Session.GetString("isRegistered") == "Yes")
+            {
+                ViewData["ShowButton"] = false;
+            }
+
+
+            TeamDetailViewModel viewModel = await GetTeamDetailViewModelFromTeam(team);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Player,CommonUser")]
+        public async Task<IActionResult> Details(TeamDetailViewModel viewModel)
+        { 
+
+
+            if (ModelState.IsValid)
+            {
+
+                Team team = await _context.Team
+                    .SingleOrDefaultAsync(m => m.teamId == viewModel.TeamID);
+
+                if (team == null)
+                    {
+                        return NotFound();
+                    }
+
+                string userid = HttpContext.Session.GetString("tempUserId");
+
+                if (userid == null)
+                    return NotFound();
+
+                RegisteredUser user = new RegisteredUser();
+
+                ApplicationUser tempuser = await _context.Users.SingleOrDefaultAsync(m => m.Id == userid);
+
+                tempuser.RelatedTeam = team;
+
+                user.RelatedTeam = tempuser.RelatedTeam;
+                user.Firstname = tempuser.Firstname;
+                user.Surname = tempuser.Surname;
+                user.FullName = tempuser.FullName;
+                user.RelatedTeamName = team.teamName;
+
+                user.isRegistered = "Yes";
+                tempuser.isRegistered = "Yes";
+                //Add the comments to the database.
+                _context.TeamRegisteredUsers.Add(user);
+                await _context.SaveChangesAsync();
+
+                viewModel = await GetTeamDetailViewModelFromTeam(team);
+      
+
+            }
+            return View(viewModel);
+        }
+
+
+        private async Task<TeamDetailViewModel> GetTeamDetailViewModelFromTeam(Team team)
+        {
+            TeamDetailViewModel viewModel = new TeamDetailViewModel();
+
+            viewModel.Team = team;
+
+            List<RegisteredUser> users = await _context.TeamRegisteredUsers
+                .Where(m => m.RelatedTeam == team).ToListAsync();
+
+            viewModel.RegisteredUsers = users;
+            return viewModel;
+
         }
 
         // GET: Teams/Create
@@ -66,6 +153,7 @@ namespace WebApplication8.Controllers
             return View(team);
         }
 
+
         // GET: Teams/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -79,6 +167,7 @@ namespace WebApplication8.Controllers
             {
                 return NotFound();
             }
+
             return View(team);
         }
 

@@ -23,16 +23,39 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="matchid" />
+            @*<div class="form-group">
+        <label asp-for="team1Name" class="control-label"></label>
+        <input asp-for="team1Name" class="form-control" />
+        <span asp-validation-for="team1Name" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+        <label asp-for="team2Name" class="control-label"></label>
+        <input asp-for="team2Name" class="form-control" />
+        <span asp-validation-for="team2Name" class="text-danger"></span>
+        </div>*@
+
             <div class="form-group">
                 <label asp-for="team1Name" class="control-label"></label>
-                <input asp-for="team1Name" class="form-control" />
+                @Html.DropDownList("team1Name", new SelectList(ViewBag.drolistmenu1, "Value", "Text"), "select team1",
+                new
+                {
+                    @class = "custom-class-for-width",
+                    style = "width: 60px,length: 30px"
+                })
                 <span asp-validation-for="team1Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="team2Name" class="control-label"></label>
-                <input asp-for="team2Name" class="form-control" />
+                @Html.DropDownList("team2Name", new SelectList(ViewBag.drolistmenu2, "Value", "Text"), "select team2",
+                new
+                {
+                    @class = "custom-class-for-width",
+                    style = "width: 60px,length: 30px"
+                })
                 <span asp-validation-for="team2Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="team1Score" class="control-label"></label>
                 <input asp-for="team1Score" class="form-control" />
@@ -55,12 +78,26 @@
             </div>
             <div class="form-group">
                 <label asp-for="penalty" class="control-label"></label>
-                <input asp-for="penalty" class="form-control" />
+                @Html.DropDownList("penalty",
+                           new SelectList(Enum.GetValues(typeof(penalty))),
+                           "",
+                           new
+                           {
+                               @class = "custom-class-for-width",
+                               style = "width: 60px,length: 30px"
+                           })
                 <span asp-validation-for="penalty" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="overtime" class="control-label"></label>
-                <input asp-for="overtime" class="form-control" />
+                @Html.DropDownList("overtime",
+                        new SelectList(Enum.GetValues(typeof(overtime))),
+                           "",
+                           new
+                           {
+                               @class = "custom-class-for-width",
+                               style = "width: 60px,length: 30px"
+                           })
                 <span asp-validation-for="overtime" class="text-danger"></span>
             </div>
             <div class="form-group">

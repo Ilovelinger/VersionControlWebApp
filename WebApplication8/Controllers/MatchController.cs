@@ -9,7 +9,9 @@ using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 using WebApplication8.Data;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Principal;
-
+using Microsoft.AspNetCore.Http;
+using System.Data.SqlClient;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApplication8.Controllers
 {
@@ -27,14 +29,34 @@ namespace WebApplication8.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IActionResult Index()
+        //[Authorize(Roles = "Admin")]
+        public IActionResult MatchPage()
         {
+            //List<Team> teams = db.Team.ToList();
+
+            //SelectList teamlist = new SelectList(teams, "jurisdictionName", "jurisdictionName");
+
+            //ViewBag.teamlist = teamlist.AsEnumerable();
+
+            ViewBag.drolistmenu1 = db.Team.Select(g => new SelectListItem
+            {
+                Text = g.teamName,
+                Value = g.teamName,
+                Selected = false
+            });
+
+            ViewBag.drolistmenu2 = db.Team.Select(g => new SelectListItem
+            {
+                Text = g.teamName,
+                Value = g.teamName,
+                Selected = false
+            });
+
             return View("MatchPage");
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult AddNewMatch()
         {
             return View("AddNewMatch");
@@ -54,7 +76,6 @@ namespace WebApplication8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> NewMatchListAsync(NewMatch newmatch)
         {
-            //Add posts to the database.
             db.NewMatches.Add(newmatch);
             await db.SaveChangesAsync();
 
@@ -64,6 +85,7 @@ namespace WebApplication8.Controllers
         [HttpGet]
         public IActionResult MatchList()
         {
+
             MatchListViewModel matchlistVM = new MatchListViewModel();
            
             matchlistVM.Matches = db.Matches.ToList<Match>();
@@ -77,7 +99,16 @@ namespace WebApplication8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MatchListAsync(Match match)
         {
-    
+            var selectedTeam1 = match.team1Name;
+            var selectedTeam2 = match.team2Name;
+            Team team1 = await db.Team
+                .SingleOrDefaultAsync(m => m.teamName == selectedTeam1);
+            match.RelatedTeam1 = team1;
+
+            Team team2 = await db.Team
+                .SingleOrDefaultAsync(m => m.teamName == selectedTeam2);
+            match.RelatedTeam2 = team2;
+
             db.Matches.Add(match);
             await db.SaveChangesAsync();
 
@@ -149,6 +180,9 @@ namespace WebApplication8.Controllers
         /// <returns></returns>
         public async Task<IActionResult> AddComments(int? id)
         {
+            //ViewData["tempUserName4"] = ViewData["tempUserName3"];
+            //TempData.Keep();
+
             if (id == null)
             {
                 return NotFound();
@@ -177,13 +211,21 @@ namespace WebApplication8.Controllers
         [Authorize(Roles = "Admin,Player,CommonUser")]
         public async Task<IActionResult> AddComments([Bind("MatchID,CommentsContent")]MatchDetailViewModel viewModel)
         {
+
             if (ModelState.IsValid)
             {
                 Comment comment = new Comment();
                 comment.commentscontent = viewModel.CommentsContent;
                 //comment.commentUsername = HttpContext.User.Identity.Name.ToString();
-                if(TempData["tempUserName"]!=null)
-                comment.commentUsername = TempData["tempUserName"].ToString();
+
+
+                //string tempUserName = ViewData["tempUserName"].ToString();
+
+                //if(TempData["TempUserName4"]!=null)
+                //    tempUserName = TempData["tempUserName4"].ToString();
+
+                //if (TempData["tempUserName4"] != null)
+                comment.commentUsername = HttpContext.Session.GetString("tempUserName");
 
 
                 //Database query.

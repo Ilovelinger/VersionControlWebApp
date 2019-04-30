@@ -10,8 +10,8 @@ using WebApplication8.Data;
 namespace WebApplication8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190121191429_First")]
-    partial class First
+    [Migration("20190430200212_initial2")]
+    partial class initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,6 +144,8 @@ namespace WebApplication8.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<byte[]>("AvatarImage");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -153,6 +155,8 @@ namespace WebApplication8.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("Firstname");
+
+                    b.Property<string>("FullName");
 
                     b.Property<int>("KitNumber");
 
@@ -178,6 +182,8 @@ namespace WebApplication8.Migrations
 
                     b.Property<string>("Position");
 
+                    b.Property<int?>("RelatedTeamteamId");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<string>("Surname");
@@ -186,6 +192,8 @@ namespace WebApplication8.Migrations
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
+
+                    b.Property<string>("isRegistered");
 
                     b.HasKey("Id");
 
@@ -197,6 +205,8 @@ namespace WebApplication8.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("RelatedTeamteamId");
+
                     b.ToTable("AspNetUsers");
                 });
 
@@ -207,6 +217,8 @@ namespace WebApplication8.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("RelatedMatchmatchid");
+
+                    b.Property<string>("commentUsername");
 
                     b.Property<string>("commentscontent")
                         .HasMaxLength(200);
@@ -223,6 +235,10 @@ namespace WebApplication8.Migrations
                     b.Property<int>("matchid")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("RelatedTeam1teamId");
+
+                    b.Property<int?>("RelatedTeam2teamId");
 
                     b.Property<DateTime>("dateTime");
 
@@ -246,6 +262,10 @@ namespace WebApplication8.Migrations
 
                     b.HasKey("matchid");
 
+                    b.HasIndex("RelatedTeam1teamId");
+
+                    b.HasIndex("RelatedTeam2teamId");
+
                     b.ToTable("Matches");
                 });
 
@@ -255,6 +275,10 @@ namespace WebApplication8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Overtime");
+
+                    b.Property<string>("Penalty");
+
                     b.Property<DateTime>("dateTime");
 
                     b.Property<string>("location");
@@ -263,13 +287,101 @@ namespace WebApplication8.Migrations
 
                     b.Property<string>("matchType");
 
-                    b.Property<string>("overtime");
-
-                    b.Property<string>("penalty");
-
                     b.HasKey("newMatchId");
 
                     b.ToTable("NewMatches");
+                });
+
+            modelBuilder.Entity("WebApplication8.Models.PlayerPerformance", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("RelatedMatchmatchid");
+
+                    b.Property<string>("RelatedUserId");
+
+                    b.Property<int>("assists");
+
+                    b.Property<int>("clearances");
+
+                    b.Property<int>("goals");
+
+                    b.Property<int>("keydribbles");
+
+                    b.Property<int>("keypasses");
+
+                    b.Property<string>("linkedTeamname");
+
+                    b.Property<string>("linkedplayername");
+
+                    b.Property<int>("redcard");
+
+                    b.Property<int>("saves");
+
+                    b.Property<string>("startup");
+
+                    b.Property<string>("substitute");
+
+                    b.Property<int>("yellowcard");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("RelatedMatchmatchid");
+
+                    b.HasIndex("RelatedUserId");
+
+                    b.ToTable("PlayerPerformance");
+                });
+
+            modelBuilder.Entity("WebApplication8.Models.RegisteredUser", b =>
+                {
+                    b.Property<int>("RegisteredUserId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("AvatarImage");
+
+                    b.Property<string>("Firstname");
+
+                    b.Property<string>("FullName");
+
+                    b.Property<int>("KitNumber");
+
+                    b.Property<int>("MobilePhoneNumber");
+
+                    b.Property<string>("Nickname");
+
+                    b.Property<string>("Position");
+
+                    b.Property<string>("RelatedTeamName");
+
+                    b.Property<int?>("RelatedTeamteamId");
+
+                    b.Property<string>("Surname");
+
+                    b.Property<string>("isRegistered");
+
+                    b.HasKey("RegisteredUserId");
+
+                    b.HasIndex("RelatedTeamteamId");
+
+                    b.ToTable("TeamRegisteredUsers");
+                });
+
+            modelBuilder.Entity("WebApplication8.Models.Team", b =>
+                {
+                    b.Property<int>("teamId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("teamName")
+                        .HasMaxLength(20);
+
+                    b.HasKey("teamId");
+
+                    b.ToTable("Team");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -317,11 +429,47 @@ namespace WebApplication8.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WebApplication8.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("WebApplication8.Models.Team", "RelatedTeam")
+                        .WithMany()
+                        .HasForeignKey("RelatedTeamteamId");
+                });
+
             modelBuilder.Entity("WebApplication8.Models.Comment", b =>
                 {
                     b.HasOne("WebApplication8.Models.Match", "RelatedMatch")
                         .WithMany()
                         .HasForeignKey("RelatedMatchmatchid");
+                });
+
+            modelBuilder.Entity("WebApplication8.Models.Match", b =>
+                {
+                    b.HasOne("WebApplication8.Models.Team", "RelatedTeam1")
+                        .WithMany()
+                        .HasForeignKey("RelatedTeam1teamId");
+
+                    b.HasOne("WebApplication8.Models.Team", "RelatedTeam2")
+                        .WithMany()
+                        .HasForeignKey("RelatedTeam2teamId");
+                });
+
+            modelBuilder.Entity("WebApplication8.Models.PlayerPerformance", b =>
+                {
+                    b.HasOne("WebApplication8.Models.Match", "RelatedMatch")
+                        .WithMany()
+                        .HasForeignKey("RelatedMatchmatchid");
+
+                    b.HasOne("WebApplication8.Models.ApplicationUser", "RelatedUser")
+                        .WithMany()
+                        .HasForeignKey("RelatedUserId");
+                });
+
+            modelBuilder.Entity("WebApplication8.Models.RegisteredUser", b =>
+                {
+                    b.HasOne("WebApplication8.Models.Team", "RelatedTeam")
+                        .WithMany()
+                        .HasForeignKey("RelatedTeamteamId");
                 });
 #pragma warning restore 612, 618
         }

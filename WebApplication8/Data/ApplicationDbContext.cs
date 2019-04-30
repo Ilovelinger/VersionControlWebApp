@@ -12,11 +12,15 @@ namespace WebApplication8.Data
     /// </summary>
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser,ApplicationRole,string>
     {
+        //public ApplicationDbContext()
+        //{
+        //}
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
-        
+
         //Create table "Matches".
         public DbSet<Match> Matches { get; set; }
         //Create table "Comments".
@@ -25,6 +29,10 @@ namespace WebApplication8.Data
         public DbSet<NewMatch> NewMatches { get; set; }
 
         public DbSet<WebApplication8.Models.Team> Team { get; set; }
+
+        public DbSet<RegisteredUser> TeamRegisteredUsers { get; set; }
+
+        public DbSet<WebApplication8.Models.PlayerPerformance> PlayerPerformance { get; set; }
 
     }
 }

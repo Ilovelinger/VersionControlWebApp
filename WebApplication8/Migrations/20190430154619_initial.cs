@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApplication8.Migrations
 {
-    public partial class First : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,6 +21,58 @@ namespace WebApplication8.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NewMatches",
+                columns: table => new
+                {
+                    newMatchId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    matchType = table.Column<string>(nullable: true),
+                    dateTime = table.Column<DateTime>(nullable: false),
+                    location = table.Column<string>(nullable: true),
+                    Penalty = table.Column<string>(nullable: true),
+                    Overtime = table.Column<string>(nullable: true),
+                    matchDescription = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewMatches", x => x.newMatchId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Team",
+                columns: table => new
+                {
+                    teamId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    teamName = table.Column<string>(maxLength: 20, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Team", x => x.teamId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,11 +99,21 @@ namespace WebApplication8.Migrations
                     Nickname = table.Column<string>(nullable: true),
                     MobilePhoneNumber = table.Column<int>(nullable: false),
                     KitNumber = table.Column<int>(nullable: false),
-                    Position = table.Column<string>(nullable: true)
+                    Position = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
+                    AvatarImage = table.Column<byte[]>(nullable: true),
+                    RelatedTeamteamId = table.Column<int>(nullable: true),
+                    isRegistered = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Team_RelatedTeamteamId",
+                        column: x => x.RelatedTeamteamId,
+                        principalTable: "Team",
+                        principalColumn: "teamId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,50 +131,54 @@ namespace WebApplication8.Migrations
                     penalty = table.Column<string>(nullable: true),
                     overtime = table.Column<string>(nullable: true),
                     team1PenaltyScore = table.Column<int>(nullable: false),
-                    team2PenaltyScore = table.Column<int>(nullable: false)
+                    team2PenaltyScore = table.Column<int>(nullable: false),
+                    RelatedTeam1teamId = table.Column<int>(nullable: true),
+                    RelatedTeam2teamId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Matches", x => x.matchid);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NewMatches",
-                columns: table => new
-                {
-                    newMatchId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    matchType = table.Column<string>(nullable: true),
-                    dateTime = table.Column<DateTime>(nullable: false),
-                    location = table.Column<string>(nullable: true),
-                    penalty = table.Column<string>(nullable: true),
-                    overtime = table.Column<string>(nullable: true),
-                    matchDescription = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NewMatches", x => x.newMatchId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Matches_Team_RelatedTeam1teamId",
+                        column: x => x.RelatedTeam1teamId,
+                        principalTable: "Team",
+                        principalColumn: "teamId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Matches_Team_RelatedTeam2teamId",
+                        column: x => x.RelatedTeam2teamId,
+                        principalTable: "Team",
+                        principalColumn: "teamId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeamRegisteredUsers",
+                columns: table => new
+                {
+                    RegisteredUserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Firstname = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
+                    Nickname = table.Column<string>(nullable: true),
+                    MobilePhoneNumber = table.Column<int>(nullable: false),
+                    KitNumber = table.Column<int>(nullable: false),
+                    Position = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
+                    AvatarImage = table.Column<byte[]>(nullable: true),
+                    RelatedTeamteamId = table.Column<int>(nullable: true),
+                    RelatedTeamName = table.Column<string>(nullable: true),
+                    isRegistered = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeamRegisteredUsers", x => x.RegisteredUserId);
+                    table.ForeignKey(
+                        name: "FK_TeamRegisteredUsers_Team_RelatedTeamteamId",
+                        column: x => x.RelatedTeamteamId,
+                        principalTable: "Team",
+                        principalColumn: "teamId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,6 +273,7 @@ namespace WebApplication8.Migrations
                     commentid = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     commentscontent = table.Column<string>(maxLength: 200, nullable: true),
+                    commentUsername = table.Column<string>(nullable: true),
                     RelatedMatchmatchid = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -217,6 +284,42 @@ namespace WebApplication8.Migrations
                         column: x => x.RelatedMatchmatchid,
                         principalTable: "Matches",
                         principalColumn: "matchid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlayerPerformance",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    startup = table.Column<string>(nullable: true),
+                    substitute = table.Column<string>(nullable: true),
+                    goals = table.Column<int>(nullable: false),
+                    assists = table.Column<int>(nullable: false),
+                    keypasses = table.Column<int>(nullable: false),
+                    keydribbles = table.Column<int>(nullable: false),
+                    clearances = table.Column<int>(nullable: false),
+                    saves = table.Column<int>(nullable: false),
+                    yellowcard = table.Column<int>(nullable: false),
+                    redcard = table.Column<int>(nullable: false),
+                    RelatedMatchmatchid = table.Column<int>(nullable: true),
+                    RelatedUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerPerformance", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_PlayerPerformance_Matches_RelatedMatchmatchid",
+                        column: x => x.RelatedMatchmatchid,
+                        principalTable: "Matches",
+                        principalColumn: "matchid",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PlayerPerformance_AspNetUsers_RelatedUserId",
+                        column: x => x.RelatedUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -260,9 +363,39 @@ namespace WebApplication8.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_RelatedTeamteamId",
+                table: "AspNetUsers",
+                column: "RelatedTeamteamId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_RelatedMatchmatchid",
                 table: "Comments",
                 column: "RelatedMatchmatchid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Matches_RelatedTeam1teamId",
+                table: "Matches",
+                column: "RelatedTeam1teamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Matches_RelatedTeam2teamId",
+                table: "Matches",
+                column: "RelatedTeam2teamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerPerformance_RelatedMatchmatchid",
+                table: "PlayerPerformance",
+                column: "RelatedMatchmatchid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayerPerformance_RelatedUserId",
+                table: "PlayerPerformance",
+                column: "RelatedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeamRegisteredUsers_RelatedTeamteamId",
+                table: "TeamRegisteredUsers",
+                column: "RelatedTeamteamId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -289,13 +422,22 @@ namespace WebApplication8.Migrations
                 name: "NewMatches");
 
             migrationBuilder.DropTable(
+                name: "PlayerPerformance");
+
+            migrationBuilder.DropTable(
+                name: "TeamRegisteredUsers");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Matches");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Matches");
+                name: "Team");
         }
     }
 }

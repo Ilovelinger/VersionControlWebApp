@@ -1,0 +1,97 @@
+﻿@model IEnumerable<WebApplication8.Models.PlayerPerformance>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.startup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.substitute)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.goals)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.assists)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.keypasses)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.keydribbles)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.clearances)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.saves)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.yellowcard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.redcard)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.startup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.substitute)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.goals)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.assists)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.keypasses)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.keydribbles)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.clearances)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.saves)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.yellowcard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.redcard)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

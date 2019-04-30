@@ -1,4 +1,6 @@
-﻿@model WebApplication8.Models.Team
+﻿@model WebApplication8.Models.TeamDetailViewModel
+
+@using WebApplication8.Models
 
 @{
     ViewData["Title"] = "Details";
@@ -11,14 +13,62 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.teamName)
+            @Html.DisplayNameFor(model => model.Team.teamName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.teamName)
+            @Html.DisplayFor(model => model.Team.teamName)
         </dd>
     </dl>
 </div>
+
+<table class="table">
+    <tbody>
+        @foreach (WebApplication8.Models.RegisteredUser user in Model.RegisteredUsers)
+        {
+            <tr>
+                <td>
+                    @user.Firstname  @user.Surname
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*<form method="post">
+        <input type="submit" value="Register to the Team" name="Register">
+    </form>*@
+
+@*<a asp-controller="Teams" asp-action="AddRegisterUser" asp-route-id="@Model.Team.teamId">Register to the team </a>*@
+
+@{
+    var theValue = (bool?)ViewData["ShowButton"];
+}
+
+
+@if (theValue == true)
+{
+    <h4>Register to the team</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Details">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TeamID" value="@Model.Team.teamId" />
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+else
+{
+    <h4>You have registered to a team</h4>}
+
+
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.teamId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Team.teamId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -49,6 +49,10 @@ namespace WebApplication8.Data
                 {
                     UserName = "Admin@Email.com",
                     Email = "Admin@Email.com",
+                    Firstname = "Haofan",
+                    Surname = "Li",
+                    Nickname = "Eric",
+                    isRegistered = "No"
                 };
 
                 var result = await userManager.CreateAsync(user);

@@ -58,6 +58,9 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
             [Required]
             public string NickName { get; set; }
 
+            [Required]
+            public string FullName { get; set; }
+
             public int KitNumber { get; set; }
 
             public string MyPic { get; set; }
@@ -89,6 +92,7 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
                 NickName = user.Nickname,
                 KitNumber = user.KitNumber,
                 Position = user.Position,
+                FullName = user.FullName,
                 Email = email,
                 PhoneNumber = phoneNumber
             };
@@ -124,6 +128,11 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
             if (Input.NickName != user.Nickname)
             {
                 user.Nickname = Input.NickName;
+            }
+
+            if (Input.FullName != user.FullName)
+            {
+                user.FullName = Input.FullName;
             }
 
             if (Input.KitNumber != user.KitNumber)

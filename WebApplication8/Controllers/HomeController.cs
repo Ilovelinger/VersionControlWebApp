@@ -17,6 +17,7 @@ namespace WebApplication8.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            //ViewData["tempUserName2"] = TempData["tempUserName"];
             return View();
         }
 

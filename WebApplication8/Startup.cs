@@ -61,6 +61,9 @@ namespace WebApplication8
                     options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
                 });
 
+            services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
+            services.AddSession();
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = $"/Identity/Account/Login";
@@ -74,6 +77,8 @@ namespace WebApplication8
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context, RoleManager<ApplicationRole> roleManager,
                             UserManager<ApplicationUser> userManager)
         {
+            app.UseSession();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -97,7 +102,7 @@ namespace WebApplication8
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            
+
             //Seed the database.
             DummyData.Initialise(context, userManager, roleManager).Wait();
         }

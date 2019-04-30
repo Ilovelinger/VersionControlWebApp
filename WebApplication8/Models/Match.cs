@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,6 +26,8 @@ namespace WebApplication8.Models
         public int team1PenaltyScore { get; set; }
         public int team2PenaltyScore { get; set; }
 
+        public virtual Team RelatedTeam1 { get; set; }
+        public virtual Team RelatedTeam2 { get; set; }
     }
 
     public enum penalty

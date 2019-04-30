@@ -1,18 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebApplication8.Models
 {
-    /// <summary>
-    /// This is the application user model with user attributes.
-    /// </summary>
-    public class ApplicationUser : IdentityUser
+    public class RegisteredUser
     {
-        public ApplicationUser() : base() { }
-       
+        [Key]
+        [ScaffoldColumn(false)]
+        public int RegisteredUserId { get; set; }
+
         public string Firstname { get; set; }
         public string Surname { get; set; }
         public string Nickname { get; set; }
@@ -26,7 +25,8 @@ namespace WebApplication8.Models
 
         public virtual Team RelatedTeam { get; set; }
 
-        public string isRegistered { get; set; }
+        public string RelatedTeamName { get; set; }
 
+        public string isRegistered { get; set; }
     }
 }

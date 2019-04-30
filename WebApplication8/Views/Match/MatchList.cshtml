@@ -31,15 +31,16 @@
     <ul>
         @foreach (WebApplication8.Models.Match match in Model.Matches)
         {
-            <li>
-                @match.team1Name @match.team1Score : @match.team2Score @match.team2Name
-                <a asp-controller="Match" asp-action="AddComments" asp-route-id="@match.matchid">Details      </a>
-                <a asp-controller="Match" asp-action="Delete" asp-route-id="@match.matchid">Delete      </a>
-                <a asp-controller="Match" asp-action="EditMatch" asp-route-id="@match.matchid">Edit</a>
-            </li>
+        <li>
+            @match.team1Name @match.team1Score : @match.team2Score @match.team2Name
+            <a asp-controller="Match" asp-action="AddComments" asp-route-id="@match.matchid">Details      </a>
+            <a asp-controller="Match" asp-action="Delete" asp-route-id="@match.matchid">Delete      </a>
+            <a asp-controller="Match" asp-action="EditMatch" asp-route-id="@match.matchid">Edit       </a>
+            <a asp-controller="PlayerPerformances" asp-action="CreateAsync" asp-route-id="@match.matchid">Create player performance</a>
+        </li>
             <li>    </li>
 
         }
     </ul>
-    <a asp-action="Index">Add a new match</a>
+    <a asp-action="MatchPage">Add a new match</a>
 </body>

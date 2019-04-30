@@ -20,7 +20,7 @@
 
 <div class="text-center">
     <h1>Welcome!</h1>
-    <p class="lead">A web application for entering sports data version 1.2</p>
+    <p class="lead">A web application for entering sports data version 1.4 </p>
 </div>
 
 <style>
@@ -54,6 +54,10 @@
         <p>Go view new upcoming matches, player can register in a new match.</p>
         @*<p><a class="btn btn-default" asp-controller="Match" asp-action="NewMatchList">Go &raquo;</a></p>*@
     </div>
+    @*<div class="divcss5" onclick="OnClick6()">
+        <h2>Create Player Performance>>></h2>
+        <p>Create Player Performance for player</p>
+    </div>*@
     <div class="divcss5">
         <h2>External links</h2>
         <div>
@@ -80,7 +84,7 @@
 
 <script>
     function OnClick1() {
-        window.location.href = "/Match/Index";
+        window.location.href = "/Match/MatchPage";
     }
 
     function OnClick2() {
@@ -97,5 +101,7 @@
     function OnClick5() {
         window.location.href = "/Teams/Index";
     }
-
+    //function OnClick6() {
+    //    window.location.href = "/PlayerPerformances/Create";
+    //}
 </script>

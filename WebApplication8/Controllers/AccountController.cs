@@ -54,7 +54,8 @@ namespace WebApplication5.Controllers
             if (ModelState.IsValid)
             {
                 //Take the email address input as user name and email
-                var user = new ApplicationUser { UserName = vm.Email, Email = vm.Email,Nickname = vm.NickName, Firstname = vm.Firstname, Surname = vm.Surname, Position = vm.Position };
+                var user = new ApplicationUser { UserName = vm.Email, Email = vm.Email,Nickname = vm.NickName, Firstname = vm.Firstname, Surname = vm.Surname,FullName = vm.FullName,Position = vm.Position,MobilePhoneNumber = vm.MobilePhoneNumber,KitNumber = vm.KitNumber };
+                user.isRegistered = "No";
 
                 using (var memoryStream = new MemoryStream())
                 {
@@ -79,7 +80,7 @@ namespace WebApplication5.Controllers
                         await _userManager.AddToRoleAsync(user, "CommonUser");
                     }
                     await _signinManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("DoWork", "Account");
                 }
                 else
                 {
@@ -113,10 +114,10 @@ namespace WebApplication5.Controllers
                 var result = await _signinManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    var userid = _userManager.GetUserId(HttpContext.User);
-                    ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+                    //var userid = _userManager.GetUserId(HttpContext.User);
+                    //ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
                     //HttpContext.Session.SetString("tempName", user.Nickname);
-                    TempData["tempUserName"] = user.Email;
+                    //TempData["tempUserName"] = user.Email;
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -136,7 +137,24 @@ namespace WebApplication5.Controllers
             {
                 var userid = _userManager.GetUserId(HttpContext.User);
                 ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
-                TempData["tempUserName"] = user.Nickname.ToString();
+
+                //TempData["tempUserName"] = user.Nickname.ToString();
+
+                HttpContext.Session.SetString("tempUserName", user.Nickname);
+
+                //HttpContext.Session.SetString("tempUserId1", user.Id);
+
+                HttpContext.Session.SetString("isRegistered", user.isRegistered);
+
+                HttpContext.Session.SetString("tempUserId", user.Id);
+
+                //TempData["RelatedTeam"] = user.RelatedTeam;
+
+                //TempData["CurrentUserId"] = user.Id;
+
+                //TempData["tempUserFirstName"] = user.Firstname.ToString();
+                //TempData["tempUserLastName"] = user.Surname.ToString();
+
             }
 
             //HttpContext.Session.SetString("tempName", user.Nickname);
