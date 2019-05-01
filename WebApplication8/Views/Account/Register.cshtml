@@ -141,7 +141,7 @@
         <label asp-for="Position">Position(leave it blank if you are not a player)</label>
         @*@Html.DropDownList("Postion",
             new SelectList(Enum.GetValues(typeof(Position))),
-            "",
+            "Select position",
             new
             {
                 @class = "custom-class-for-width",

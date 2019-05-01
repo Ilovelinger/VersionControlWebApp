@@ -20,9 +20,18 @@ namespace WebApplication8.Controllers
         }
 
         // GET: PlayerPerformances
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int ?id)
         {
-            return View(await _context.PlayerPerformance.ToListAsync());
+            var allperformance = _context.PlayerPerformance.ToList();
+
+            Match match = _context.Matches.SingleOrDefault(u => u.matchid == id);
+
+
+            var performances = allperformance.Where(x => x.RelatedMatch == match).ToList();
+
+
+            //return View(await _context.PlayerPerformance.ToListAsync());
+            return View(performances);
         }
 
         // GET: PlayerPerformances/Details/5
@@ -101,11 +110,15 @@ namespace WebApplication8.Controllers
 
                 ApplicationUser linkeduser = await _context.Users.SingleOrDefaultAsync(m => m.FullName == linkedplayername);
 
-                if (linkeduser.RelatedTeam != linkedteam)
-                {
-                    ModelState.AddModelError("", "The player does not exist in the team!");
-                    return View(playerPerformance);
-                }
+                //RegisteredUser tempuser = await _context.TeamRegisteredUsers.SingleOrDefaultAsync(m => m.FullName == linkedplayername);
+
+                //var tempteam = linkeduser.RelatedTeam;
+
+                //if (tempteam.teamName != playerPerformance.linkedTeamname)
+                //{
+                //    ModelState.AddModelError("", "The player does not exist in the team!");
+                //    return View(playerPerformance);
+                //}
 
                 int tempmatchid = (int)TempData["tempmatchid"];
                 Match match = await _context.Matches
@@ -116,7 +129,7 @@ namespace WebApplication8.Controllers
 
                 _context.Add(playerPerformance);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("MatchList", "Match"); 
             }
             return View(playerPerformance);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -45,9 +46,9 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
             [EmailAddress]
             public string Email { get; set; }
 
-            [Phone]
+            //[Phone]
             [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+            public int PhoneNumber { get; set; }
 
             [Required]
             public string Firstname { get; set; }
@@ -63,9 +64,12 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
 
             public int KitNumber { get; set; }
 
-            public string MyPic { get; set; }
+            //public string MyPic { get; set; }
 
             public string Position { get; set; }
+
+            public IFormFile AvatarImage { get; set; }
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -94,7 +98,7 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
                 Position = user.Position,
                 FullName = user.FullName,
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = user.MobilePhoneNumber,
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -145,6 +149,11 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
                 user.Position = Input.Position;
             }
 
+            if (Input.PhoneNumber != user.MobilePhoneNumber)
+            {
+                user.MobilePhoneNumber = Input.PhoneNumber;
+            }
+
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
             {
@@ -156,16 +165,22 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
-                }
-            }
+            //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            //if (Input.PhoneNumber != phoneNumber)
+            //{
+            //    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+            //    if (!setPhoneResult.Succeeded)
+            //    {
+            //        var userId = await _userManager.GetUserIdAsync(user);
+            //        throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
+            //    }
+            //}
+
+            //using (var memoryStream = new MemoryStream())
+            //{
+            //    await uploadfile.CopyToAsync(memoryStream);
+            //    user.AvatarImage = memoryStream.ToArray();
+            //}
 
             await _userManager.UpdateAsync(user);
 

@@ -216,16 +216,12 @@ namespace WebApplication8.Controllers
             {
                 Comment comment = new Comment();
                 comment.commentscontent = viewModel.CommentsContent;
-                //comment.commentUsername = HttpContext.User.Identity.Name.ToString();
 
-
-                //string tempUserName = ViewData["tempUserName"].ToString();
-
-                //if(TempData["TempUserName4"]!=null)
-                //    tempUserName = TempData["tempUserName4"].ToString();
-
-                //if (TempData["tempUserName4"] != null)
                 comment.commentUsername = HttpContext.Session.GetString("tempUserName");
+
+                var tempuserid = HttpContext.Session.GetString("tempUserId");
+
+                ApplicationUser user = await db.Users.SingleOrDefaultAsync(m => m.Id == tempuserid);
 
 
                 //Database query.
@@ -238,6 +234,7 @@ namespace WebApplication8.Controllers
                 }
 
                 comment.RelatedMatch = match;
+                comment.RelatedUser = user;
                 //Add the comments to the database.
                 db.Comments.Add(comment);
                 await db.SaveChangesAsync();

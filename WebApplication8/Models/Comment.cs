@@ -23,5 +23,8 @@ namespace WebApplication8.Models
         //Create foreign key realated to post model.
         public virtual Match RelatedMatch { get; set; }
 
+        public virtual ApplicationUser RelatedUser { get; set; }
+
+
     }
 }

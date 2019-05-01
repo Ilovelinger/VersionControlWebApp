@@ -138,26 +138,14 @@ namespace WebApplication5.Controllers
                 var userid = _userManager.GetUserId(HttpContext.User);
                 ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
 
-                //TempData["tempUserName"] = user.Nickname.ToString();
-
                 HttpContext.Session.SetString("tempUserName", user.Nickname);
-
-                //HttpContext.Session.SetString("tempUserId1", user.Id);
 
                 HttpContext.Session.SetString("isRegistered", user.isRegistered);
 
                 HttpContext.Session.SetString("tempUserId", user.Id);
 
-                //TempData["RelatedTeam"] = user.RelatedTeam;
-
-                //TempData["CurrentUserId"] = user.Id;
-
-                //TempData["tempUserFirstName"] = user.Firstname.ToString();
-                //TempData["tempUserLastName"] = user.Surname.ToString();
 
             }
-
-            //HttpContext.Session.SetString("tempName", user.Nickname);
             //_logger.LogInformation("User logged in.");
             return RedirectToAction("Index", "Home");
 
