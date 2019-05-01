@@ -18,11 +18,11 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Create">
+            <form asp-controller="PlayerPerformances" asp-action="CreatePlayerPerformance">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="linkedTeamname" class="control-label"></label>
-                    @Html.DropDownList("teamName", new SelectList(ViewBag.drolistmenu1, "Value", "Text"), "select team",
+                    @Html.DropDownList("linkedTeamname", new SelectList(ViewBag.drolistmenu1, "Value", "Text"), "select team",
                     new
                     {
                         @class = "custom-class-for-width",
@@ -33,13 +33,13 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="linkedplayername" class="control-label"></label>
-                    @Html.DropDownList("FullName", new SelectList(ViewBag.drolistmenu2, "Value", "Text"), "select player",
-                    new
-                    {
+                    @Html.DropDownList("linkedplayername", new SelectList(ViewBag.drolistmenu2, "Value", "Text"), "select player",
+                     new
+                     {
                         @class = "custom-class-for-width",
                         style = "width: 60px,length: 30px",
                         @id = "Player"
-                    })
+                     })
                     <span asp-validation-for="linkedplayername" class="text-danger"></span>
                 </div>
 

@@ -13,6 +13,8 @@ namespace WebApplication8.Models
         public int id { get; set; }
 
         //[MinLength(2), MaxLength(20)]
+        public string linkedTeamname { get; set; }
+        public string linkedplayername { get; set; }
         public String startup { get; set; }
         public String substitute { get; set; }
         public int goals { get; set; }
@@ -23,9 +25,6 @@ namespace WebApplication8.Models
         public int saves { get; set; }
         public int yellowcard { get; set; }
         public int redcard { get; set; }
-
-        public string linkedTeamname { get; set; }
-        public string linkedplayername { get; set; }
 
         public virtual Match RelatedMatch { get; set; }
 

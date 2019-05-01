@@ -70,7 +70,7 @@ namespace WebApplication8.Controllers
             ViewBag.drolistmenu1 = teams.Select(g => new SelectListItem()
             {
                 Text = g.teamName,
-                Value = g.teamId.ToString(),
+                Value = g.teamName,
                 Selected = false
             });
 
@@ -87,17 +87,19 @@ namespace WebApplication8.Controllers
         // POST: PlayerPerformances/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("CreatePlayerPerformance")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("startup,substitute,goals,assists,keypasses,keydribbles,clearances,saves,yellowcard,redcard")] PlayerPerformance playerPerformance)
+        public async Task<IActionResult> Create([Bind("linkedTeamname,linkedplayername,startup,substitute,goals,assists,keypasses,keydribbles,clearances,saves,yellowcard,redcard")] PlayerPerformance playerPerformance)
         {
             if (ModelState.IsValid)
             {
+                var linkedteamname = playerPerformance.linkedplayername;
+                var linkedplayername = playerPerformance.linkedplayername;
 
                 Team linkedteam = await _context.Team
-                    .SingleOrDefaultAsync(m => m.teamName == playerPerformance.linkedTeamname);
+                    .SingleOrDefaultAsync(m => m.teamName == linkedteamname);
 
-                ApplicationUser linkeduser = await _context.Users.SingleOrDefaultAsync(m => m.FullName == playerPerformance.linkedplayername);
+                ApplicationUser linkeduser = await _context.Users.SingleOrDefaultAsync(m => m.FullName == linkedplayername);
 
                 if (linkeduser.RelatedTeam != linkedteam)
                 {
@@ -111,7 +113,6 @@ namespace WebApplication8.Controllers
 
                 playerPerformance.RelatedMatch = match;
                 playerPerformance.RelatedUser = linkeduser;
-
 
                 _context.Add(playerPerformance);
                 await _context.SaveChangesAsync();
