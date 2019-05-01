@@ -221,6 +221,8 @@ namespace WebApplication8.Controllers
 
                 var tempuserid = HttpContext.Session.GetString("tempUserId");
 
+                ViewData["Userid"] = tempuserid;
+
                 ApplicationUser user = await db.Users.SingleOrDefaultAsync(m => m.Id == tempuserid);
 
 
@@ -412,5 +414,34 @@ namespace WebApplication8.Controllers
             return db.Comments.Any(e => e.commentid == id);
         }
 
-    }
+        public async Task<IActionResult> ViewUserProfile(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            //Database query.
+            ApplicationUser User = await db.Users
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (User == null)
+            {
+                return NotFound();
+            }
+
+            Team Team = User.RelatedTeam;
+
+            ViewBag.Username = User.FullName;
+            ViewBag.Email = User.Email;
+            ViewBag.Position = User.MobilePhoneNumber;
+            ViewBag.KitNumber = User.KitNumber;
+            ViewBag.Team = Team.teamName;
+            string temp_inBase64 = Convert.ToBase64String(User.AvatarImage);
+            ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);
+
+
+
+
+            return View();
+
+        }
 }

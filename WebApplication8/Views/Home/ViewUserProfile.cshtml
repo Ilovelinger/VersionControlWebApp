@@ -1,0 +1,39 @@
+﻿
+
+@*@{
+        Layout = null;
+    }*@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UserProfile</title>
+</head>
+<body>
+
+    <img src="@ViewData["MyPic"]" width="120" height="120" />
+    
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dd>
+                ViewBag.Username
+            </dd>
+            <dd>
+                ViewBag.Email
+            </dd>
+            <dd>
+                ViewBag.Position
+            </dd>
+            <dd>
+                ViewBag.KitNumber
+            </dd>
+            <dd>
+                ViewBag.Team
+            </dd>
+        </dl>
+    </div>
+</body>
+</html>

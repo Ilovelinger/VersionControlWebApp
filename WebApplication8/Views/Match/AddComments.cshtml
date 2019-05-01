@@ -63,9 +63,8 @@
         {
             <tr>
                 <td>
-                    @*@UserManager.GetUserName(User):*@
-                    @*@Html.DisplayFor(model=>model.ApplicationUser.Nickname):*@
-                    @comment.commentUsername:
+                    @*<a asp-area="Identity" asp-page="/Account/Manage/Index" asp-route-id="@ViewData["Userid"]">@comment.commentUsername</a>:*@
+                    <a asp-controller="Match" asp-action="ViewUserProfile" asp-route-id="@ViewData["Userid"]">@comment.commentUsername</a>:
                     @comment.commentscontent
                     <a asp-controller="Match" asp-action="DeleteComment" asp-route-id="@comment.commentid">Delete</a>
                 </td>
