@@ -430,15 +430,38 @@ namespace WebApplication8.Controllers
 
             Team Team = User.RelatedTeam;
 
+            var allcomments = db.Comments;
+            var comments = allcomments.Include(u => u.RelatedMatch).Where(x => x.RelatedUser == User).ToList();
 
+            var allplayerperformance = db.PlayerPerformance;
+            var playerperformance = allplayerperformance.Include(u => u.RelatedMatch).Where(x => x.RelatedUser == User).ToList();
+
+            ViewBag.comments = comments;
+            ViewBag.playerperformance = playerperformance;
 
             ViewBag.Username = User.FullName;
             ViewBag.Email = User.Email;
-            ViewBag.Position = User.MobilePhoneNumber;
+            ViewBag.MobilePhoneNumber = User.MobilePhoneNumber;
+
+            if (User.Position != null)
+            { ViewBag.Position = User.Position; }
+            else
+            {
+                ViewBag.Position = "Not a player";
+            }
+
             ViewBag.KitNumber = User.KitNumber;
-            ViewBag.Team = Team.teamName;
+
+            if (User.Position != null)
+            { ViewBag.Team = Team.teamName; }
+            else
+            {
+                ViewBag.Team = "Haven't register to a team";
+            }
             string temp_inBase64 = Convert.ToBase64String(User.AvatarImage);
             ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);
+
+
 
 
 
