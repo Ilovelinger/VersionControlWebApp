@@ -22,6 +22,8 @@ namespace WebApplication8.Models
         public string commentUsername { get; set; }
 
 
+
+
         public MatchDetailViewModel()
         {
             Comments = new List<Comment>();

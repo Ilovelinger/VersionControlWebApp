@@ -1,5 +1,4 @@
-﻿
-
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @*@{
         Layout = null;
     }*@
@@ -12,26 +11,25 @@
     <title>UserProfile</title>
 </head>
 <body>
-
     <img src="@ViewData["MyPic"]" width="120" height="120" />
-    
+
     <div>
         <hr />
         <dl class="dl-horizontal">
             <dd>
-                ViewBag.Username
+                @ViewBag.Username
             </dd>
             <dd>
-                ViewBag.Email
+                @ViewBag.Email
             </dd>
             <dd>
-                ViewBag.Position
+                @ViewBag.Position
             </dd>
             <dd>
-                ViewBag.KitNumber
+                @ViewBag.KitNumber
             </dd>
             <dd>
-                ViewBag.Team
+                @ViewBag.Team
             </dd>
         </dl>
     </div>

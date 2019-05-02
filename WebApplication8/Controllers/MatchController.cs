@@ -87,15 +87,15 @@ namespace WebApplication8.Controllers
         {
 
             MatchListViewModel matchlistVM = new MatchListViewModel();
-           
+
             matchlistVM.Matches = db.Matches.ToList<Match>();
-    
+
             matchlistVM.NumberOfMatches = matchlistVM.Matches.Count;
 
             return View(matchlistVM);
         }
 
-        [HttpPost,ActionName("Create")]
+        [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MatchListAsync(Match match)
         {
@@ -146,7 +146,7 @@ namespace WebApplication8.Controllers
         public async Task<IActionResult> NewMatchDetail(NewMatchDetailViewModel viewModel)
         {
             if (ModelState.IsValid)
-            {   
+            {
                 //Database query.
                 NewMatch newmatch = await db.NewMatches
                 .SingleOrDefaultAsync(m => m.newMatchId == viewModel.NewMatchID);
@@ -155,7 +155,7 @@ namespace WebApplication8.Controllers
                 {
                     return NotFound();
                 }
-                
+
 
                 viewModel = await GetNewMatchDetailViewModelFromNewMatch(newmatch);
 
@@ -180,8 +180,6 @@ namespace WebApplication8.Controllers
         /// <returns></returns>
         public async Task<IActionResult> AddComments(int? id)
         {
-            //ViewData["tempUserName4"] = ViewData["tempUserName3"];
-            //TempData.Keep();
 
             if (id == null)
             {
@@ -194,6 +192,7 @@ namespace WebApplication8.Controllers
             {
                 return NotFound();
             }
+
 
             MatchDetailViewModel viewModel = await GetMatchDetailViewModelFromMatch(match);
 
@@ -219,9 +218,9 @@ namespace WebApplication8.Controllers
 
                 comment.commentUsername = HttpContext.Session.GetString("tempUserName");
 
-                var tempuserid = HttpContext.Session.GetString("tempUserId");
+                string tempuserid = HttpContext.Session.GetString("tempUserId");
 
-                ViewData["Userid"] = tempuserid;
+                //ViewData["Userid"] = tempuserid;
 
                 ApplicationUser user = await db.Users.SingleOrDefaultAsync(m => m.Id == tempuserid);
 
@@ -258,10 +257,11 @@ namespace WebApplication8.Controllers
 
             viewModel.Match = match;
 
-            List<Comment> comments = await db.Comments
+            List<Comment> comments = await db.Comments.Include(u => u.RelatedUser)
                 .Where(m => m.RelatedMatch == match).ToListAsync();
 
             viewModel.Comments = comments;
+
             return viewModel;
 
         }
@@ -293,7 +293,7 @@ namespace WebApplication8.Controllers
         /// <param name="id"></param>
         /// <param name="post"></param>
         /// <returns></returns>
-        [HttpPost,ActionName("EditMatch")]
+        [HttpPost, ActionName("EditMatch")]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditMatch(int id, Match match)
@@ -420,8 +420,8 @@ namespace WebApplication8.Controllers
             {
                 return NotFound();
             }
-            //Database query.
-            ApplicationUser User = await db.Users
+
+            ApplicationUser User = await db.Users.Include(u => u.RelatedTeam)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (User == null)
             {
@@ -429,6 +429,8 @@ namespace WebApplication8.Controllers
             }
 
             Team Team = User.RelatedTeam;
+
+
 
             ViewBag.Username = User.FullName;
             ViewBag.Email = User.Email;
@@ -444,4 +446,5 @@ namespace WebApplication8.Controllers
             return View();
 
         }
+    }
 }
