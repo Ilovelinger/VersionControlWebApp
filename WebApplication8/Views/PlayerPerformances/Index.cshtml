@@ -12,12 +12,18 @@
     <title>Index</title>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@*<p>
+    <a asp-action="CreateAsync">Create New Player</a>
+</p>*@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Player Name
+            </th>
+            <th>
+                Team
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.startup)
             </th>
@@ -54,6 +60,12 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.linkedplayername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.linkedTeamname)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.startup)
             </td>

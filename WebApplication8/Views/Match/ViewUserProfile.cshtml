@@ -17,22 +17,29 @@
         <hr />
         <dl class="dl-horizontal">
             <dd>
-                @ViewBag.Username
+                Name:  @ViewBag.Username
             </dd>
             <dd>
-                @ViewBag.Email
+                Email: @ViewBag.Email
             </dd>
             <dd>
-                @ViewBag.MobilePhoneNumber
+                Phone number: @ViewBag.MobilePhoneNumber
             </dd>
             <dd>
-                @ViewBag.Position
+                Position: @ViewBag.Position
             </dd>
             <dd>
-                @ViewBag.KitNumber
+                Kit number: @ViewBag.KitNumber
             </dd>
             <dd>
-                @ViewBag.Team
+                Team: @if (ViewBag.IsRegistered == "Yes")
+                {
+                    <a asp-controller="Teams" asp-action="Details" asp-route-id="@ViewBag.TeamId">@ViewBag.Team</a>
+                }
+                else
+                {
+                    @ViewBag.Team
+                }
             </dd>
         </dl>
     </div>

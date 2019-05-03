@@ -453,10 +453,12 @@ namespace WebApplication8.Controllers
             ViewBag.KitNumber = User.KitNumber;
 
             if (User.Position != null)
-            { ViewBag.Team = Team.teamName; }
+            { ViewBag.Team = Team.teamName; ViewBag.TeamId = Team.teamId; ViewBag.IsRegistered = "Yes"; }
+
             else
             {
                 ViewBag.Team = "Haven't register to a team";
+                ViewBag.IsRegistered = "No";
             }
             string temp_inBase64 = Convert.ToBase64String(User.AvatarImage);
             ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);

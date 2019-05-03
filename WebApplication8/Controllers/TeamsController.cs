@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication8.Data;
 using WebApplication8.Models;
 using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace WebApplication8.Controllers
 {
@@ -42,15 +43,8 @@ namespace WebApplication8.Controllers
                 return NotFound();
             }
 
-            //string userid = HttpContext.Session.GetString("tempUserId");
-
-            //if (userid == null)
-            //    return NotFound();
-
-            //ApplicationUser user = await _context.Users.SingleOrDefaultAsync(m => m.Id == userid);
-
-            //if (user.Nickname != null)
-            //    return NotFound();
+            //string temp_inBase64 = Convert.ToBase64String(team.TeamLogo);
+            //ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);
 
             if (HttpContext.Session.GetString("isRegistered") == "No")
             {
@@ -146,6 +140,12 @@ namespace WebApplication8.Controllers
         {
             if (ModelState.IsValid)
             {
+                //using (var memoryStream = new MemoryStream())
+                //{
+                //    await file.CopyToAsync(memoryStream);
+                //    team.TeamLogo = memoryStream.ToArray();
+
+                //}
                 _context.Add(team);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -13,6 +13,9 @@ namespace WebApplication8.Models
         public int teamId { get; set; }
 
         [MinLength(2), MaxLength(20)]
-        public String teamName { get; set; }
+        public string teamName { get; set; }
+
+
+        //public byte[] TeamLogo { get; set; }
     }
 }
