@@ -114,11 +114,6 @@ namespace WebApplication5.Controllers
                 var result = await _signinManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    //var userid = _userManager.GetUserId(HttpContext.User);
-                    //ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
-                    //HttpContext.Session.SetString("tempName", user.Nickname);
-                    //TempData["tempUserName"] = user.Email;
-
                     return RedirectToAction("Index", "Home");
                 }
 

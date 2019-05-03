@@ -1,10 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "HomePage";
 }
 
 <style>
     body {
-        background-image: url(/images/football2.jpeg);
+        background-image: url(/images/football-1274661.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         /*background-attachment: fixed;*/
@@ -12,53 +12,47 @@
         /*background-color: darkseagreen;*/
     }
 
-    p {
+    /*p {
         font-family: "Times New Roman";
         font-size: 20px;
-    }
+    }*/
 </style>
 
 <div class="text-center">
-    <h1>Welcome!</h1>
-    <p class="lead">A web application for entering sports data version 1.4 </p>
+    <h1 style="font-family:'Comic Sans MS'">Welcome to Foot4life!</h1>
 </div>
 
 <style>
-.divcss5{float:left;width:180px;height:500px;border:3px solid rgba(0, 0, 0, 0.43)}
+.divcss5{float:left;width:180px;height:500px; left:100px; border:3px solid rgba(0, 0, 0, 0.43)}
+</style>
+
+
+<style>
+    .divcss4 {
+        float:right;
+        height: 500px;
+        right:100px;
+        border:none
+    }
 </style>
 
 <div class="row">
     <div class="divcss5" onclick="OnClick5()">
         <h2>View existing teams>>></h2>
-        <p>Go view existing teams and team details</p>
     </div>
     <div class="divcss5" onclick="OnClick1()">
         <h2>Add a match result>>></h2>
-        <p>
-            Add a match result for a match that has ended.
-        </p>
-        @*<p><a class="btn btn-default" asp-controller="Match" asp-action="Index">Go &raquo;</a></p>*@
     </div>
     <div class="divcss5" onclick="OnClick2()">
         <h2>View existing matches>>></h2>
-        <p>View existing match results.</p>
-        @*<p><a class="btn btn-default" asp-controller="Match" asp-action="MatchList">Go &raquo;</a></p>*@
     </div>
     <div class="divcss5" onclick="OnClick3()">
         <h2>Upload a new upcoming match>>></h2>
-        <p></p>
-        @*<p><a class="btn btn-default" asp-controller="Match" asp-action="AddNewMatch">Go &raquo;</a></p>*@
     </div>
     <div class="divcss5" onclick="OnClick4()">
         <h2>View new upcoming matches>>></h2>
-        <p>Go view new upcoming matches, player can register in a new match.</p>
-        @*<p><a class="btn btn-default" asp-controller="Match" asp-action="NewMatchList">Go &raquo;</a></p>*@
     </div>
-    @*<div class="divcss5" onclick="OnClick6()">
-        <h2>Create Player Performance>>></h2>
-        <p>Create Player Performance for player</p>
-    </div>*@
-    <div class="divcss5">
+    <div class="divcss4">
         <h2>External links</h2>
         <div>
             <a href="https://www.premierleague.com/home"><font size="5" color="black">PremireLeague</font></a>
