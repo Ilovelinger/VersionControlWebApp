@@ -29,7 +29,7 @@ namespace WebApplication8.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult MatchPage()
         {
             //List<Team> teams = db.Team.ToList();
@@ -56,7 +56,7 @@ namespace WebApplication8.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddNewMatch()
         {
             return View("AddNewMatch");

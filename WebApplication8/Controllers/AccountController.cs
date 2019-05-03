@@ -57,6 +57,7 @@ namespace WebApplication5.Controllers
                 var user = new ApplicationUser { UserName = vm.Email, Email = vm.Email,Nickname = vm.NickName, Firstname = vm.Firstname, Surname = vm.Surname,FullName = vm.FullName,Position = vm.Position,MobilePhoneNumber = vm.MobilePhoneNumber,KitNumber = vm.KitNumber };
                 user.isRegistered = "No";
 
+
                 using (var memoryStream = new MemoryStream())
                 {
                     await file.CopyToAsync(memoryStream);

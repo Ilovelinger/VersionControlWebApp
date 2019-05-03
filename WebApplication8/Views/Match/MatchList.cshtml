@@ -31,17 +31,22 @@
     <ul>
         @foreach (WebApplication8.Models.Match match in Model.Matches)
         {
-        <li>
-            @match.team1Name @match.team1Score : @match.team2Score @match.team2Name
-            <a asp-controller="Match" asp-action="AddComments" asp-route-id="@match.matchid">Details      </a>
-            <a asp-controller="Match" asp-action="Delete" asp-route-id="@match.matchid">Delete      </a>
-            <a asp-controller="Match" asp-action="EditMatch" asp-route-id="@match.matchid">Edit       </a>
-            <a asp-controller="PlayerPerformances" asp-action="CreateAsync" asp-route-id="@match.matchid">Create player performance</a>
-            <a asp-controller="PlayerPerformances" asp-action="Index" asp-route-id="@match.matchid">View player performance</a>
-        </li>
+            <li>
+                @match.team1Name @match.team1Score : @match.team2Score @match.team2Name
+                <a asp-controller="Match" asp-action="AddComments" asp-route-id="@match.matchid">Details | </a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Match" asp-action="Delete" asp-route-id="@match.matchid">Delete | </a>
+                    <a asp-controller="Match" asp-action="EditMatch" asp-route-id="@match.matchid">Edit | </a>
+                    <a asp-controller="PlayerPerformances" asp-action="CreateAsync" asp-route-id="@match.matchid">Create player performance | </a>
+                }
+                <a asp-controller="PlayerPerformances" asp-action="Index" asp-route-id="@match.matchid">View player performance</a>
+            </li>
             <li>    </li>
 
         }
     </ul>
-    <a asp-action="MatchPage">Add a new match</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="MatchPage">Add a new match</a>}
 </body>

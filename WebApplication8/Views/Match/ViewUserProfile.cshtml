@@ -57,7 +57,7 @@
     @foreach (var item in ViewBag.playerperformance)
     {
         <div>
-            Startup:@item.startup Substitute:@item.substitute Goals:@item.goals Assists: @item.assists Key Passes:@item.keypasses Key Dribbles:@item.keydribbles Clearances:@item.clearances Saves:@item.saves Yellow Card:@item.yellowcard Red Card:@item.redcard
+            Startup:@item.startup  Substitute:@item.substitute  Goals:@item.goals  Assists: @item.assists  Key Passes:@item.keypasses  Key Dribbles:@item.keydribbles  Clearances:@item.clearances  Saves:@item.saves  Yellow Card:@item.yellowcard  Red Card:@item.redcard
             in <a asp-controller="Match" asp-action="AddComments" asp-route-id="@item.RelatedMatch.matchid">@item.RelatedMatch.team1Name @item.RelatedMatch.team1Score : @item.RelatedMatch.team2Score @item.RelatedMatch.team2Name</a>
         </div>
     }

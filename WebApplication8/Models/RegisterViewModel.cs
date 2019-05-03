@@ -43,8 +43,10 @@ namespace WebApplication8.Models
 
         public string Position { get; set; }
 
+        [Required]
         public String UserRole { get; set; }
 
+        [Required]
         public IFormFile AvatarImage { get; set; }
     }
 

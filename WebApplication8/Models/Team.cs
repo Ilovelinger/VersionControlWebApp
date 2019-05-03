@@ -13,6 +13,7 @@ namespace WebApplication8.Models
         public int teamId { get; set; }
 
         [MinLength(2), MaxLength(20)]
+        [Required]
         public string teamName { get; set; }
 
 

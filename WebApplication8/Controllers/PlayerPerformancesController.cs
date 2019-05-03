@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: PlayerPerformances/Create
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAsync(int? id)
         {
             //Match match = await _context.Matches
@@ -97,6 +99,7 @@ namespace WebApplication8.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("CreatePlayerPerformance")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("linkedTeamname,linkedplayername,startup,substitute,goals,assists,keypasses,keydribbles,clearances,saves,yellowcard,redcard")] PlayerPerformance playerPerformance)
         {
@@ -135,6 +138,7 @@ namespace WebApplication8.Controllers
         }
 
         // GET: PlayerPerformances/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -154,9 +158,11 @@ namespace WebApplication8.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("startup,substitute,goals,assists,keypasses,keydribbles,clearances,saves,yellowcard,redcard")] PlayerPerformance playerPerformance)
         {
+
             if (id != playerPerformance.id)
             {
                 return NotFound();
@@ -180,12 +186,13 @@ namespace WebApplication8.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("MatchList", "Match");
             }
             return View(playerPerformance);
         }
 
         // GET: PlayerPerformances/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -206,12 +213,13 @@ namespace WebApplication8.Controllers
         // POST: PlayerPerformances/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var playerPerformance = await _context.PlayerPerformance.FindAsync(id);
             _context.PlayerPerformance.Remove(playerPerformance);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("MatchList","Match");
         }
 
         private bool PlayerPerformanceExists(int id)

@@ -25,7 +25,7 @@
             <input type="hidden" asp-for="matchid" />
 
             <div class="form-group">
-                <label asp-for="team1Name" class="control-label"></label>
+                <label asp-for="team1Name" class="control-label">Team 1 Name</label>
                 @Html.DropDownList("team1Name", new SelectList(ViewBag.drolistmenu1, "Value", "Text"), "select team1",
                 new
                 {
@@ -36,7 +36,7 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="team2Name" class="control-label"></label>
+                <label asp-for="team2Name" class="control-label">Team 2 Name</label>
                 @Html.DropDownList("team2Name", new SelectList(ViewBag.drolistmenu2, "Value", "Text"), "select team2",
                 new
                 {
@@ -47,27 +47,27 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="team1Score" class="control-label"></label>
+                <label asp-for="team1Score" class="control-label">Team 1 Score</label>
                 <input asp-for="team1Score" class="form-control" />
                 <span asp-validation-for="team1Score" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="team2Score" class="control-label"></label>
+                <label asp-for="team2Score" class="control-label">Team 2 Score</label>
                 <input asp-for="team2Score" class="form-control" />
                 <span asp-validation-for="team2Score" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="location" class="control-label"></label>
+                <label asp-for="location" class="control-label">Location</label>
                 <input asp-for="location" class="form-control" />
                 <span asp-validation-for="location" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="dateTime" class="control-label"></label>
+                <label asp-for="dateTime" class="control-label">Date and Time</label>
                 <input asp-for="dateTime" class="form-control" />
                 <span asp-validation-for="dateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="penalty" class="control-label"></label>
+                <label asp-for="penalty" class="control-label">Penalty</label>
                 @Html.DropDownList("penalty",
                            new SelectList(Enum.GetValues(typeof(penalty))),
                            "",
@@ -79,7 +79,7 @@
                 <span asp-validation-for="penalty" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="overtime" class="control-label"></label>
+                <label asp-for="overtime" class="control-label">Overtime</label>
                 @Html.DropDownList("overtime",
                         new SelectList(Enum.GetValues(typeof(overtime))),
                            "",
@@ -91,12 +91,12 @@
                 <span asp-validation-for="overtime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="team1PenaltyScore" class="control-label"></label>
+                <label asp-for="team1PenaltyScore" class="control-label">Team 1 Penalty Score</label>
                 <input asp-for="team1PenaltyScore" class="form-control" />
                 <span asp-validation-for="team1PenaltyScore" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="team2PenaltyScore" class="control-label"></label>
+                <label asp-for="team2PenaltyScore" class="control-label">Team 2 Penalty Score</label>
                 <input asp-for="team2PenaltyScore" class="form-control" />
                 <span asp-validation-for="team2PenaltyScore" class="text-danger"></span>
             </div>

@@ -25,34 +25,34 @@
                 Team
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.startup)
+                Startup
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.substitute)
+                Substitute
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.goals)
+                Goal
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.assists)
+                Assist
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.keypasses)
+                Key Pass
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.keydribbles)
+               Key Dribble
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.clearances)
+                Clearance
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.saves)
+                Save
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.yellowcard)
+                Yellow Card
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.redcard)
+                Red Card
             </th>
             <th></th>
         </tr>
@@ -97,9 +97,12 @@
                 @Html.DisplayFor(modelItem => item.redcard)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                @*<a asp-action="Edit" asp-route-id="@item.id">Edit</a> |*@
                 <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                }
             </td>
         </tr>
 }

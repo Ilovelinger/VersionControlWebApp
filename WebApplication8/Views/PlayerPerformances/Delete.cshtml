@@ -1,8 +1,7 @@
 ﻿@model WebApplication8.Models.PlayerPerformance
-
 @*@{
-    Layout = null;
-}*@
+        Layout = null;
+    }*@
 
 <!DOCTYPE html>
 
@@ -13,78 +12,85 @@
 </head>
 <body>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>PlayerPerformance</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.startup)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.startup)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.substitute)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.substitute)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.goals)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.goals)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.assists)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.assists)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.keypasses)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.keypasses)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.keydribbles)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.keydribbles)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.clearances)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.clearances)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.saves)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.saves)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.yellowcard)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.yellowcard)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.redcard)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.redcard)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>PlayerPerformance</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.startup)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.startup)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.substitute)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.substitute)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.goals)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.goals)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.assists)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.assists)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.keypasses)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.keypasses)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.keydribbles)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.keydribbles)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.clearances)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.clearances)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.saves)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.saves)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.yellowcard)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.yellowcard)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.redcard)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.redcard)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="id" />
+            <input type="submit" value="Delete" class="btn btn-default" onclick="msgNotification()" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
 </body>
 </html>
+
+<script>
+    function msgNotification() {
+        alert("A player performance has been deleted successfully!")
+    }
+</script>
+

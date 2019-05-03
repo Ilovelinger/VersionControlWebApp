@@ -13,11 +13,22 @@ namespace WebApplication8.Models
         public int newMatchId { get; set; }
 
         //[MinLength(2), MaxLength(20)]
+        [Required]
         public String matchType { get; set; }
+
+        [Required]
         public DateTime dateTime { get; set; }
+
+        [Required]
         public string location { get; set; }
+
+        [Required]
         public String Penalty { get; set; }
+
+        [Required]
         public String Overtime { get; set; }
+
+        [Required]
         public String matchDescription {get; set; }
     }
 
