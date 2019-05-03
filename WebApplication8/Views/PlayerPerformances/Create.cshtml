@@ -2,8 +2,8 @@
 @using System.Web.Optimization
 
 @*@{
-    Layout = null;
-}*@
+        Layout = null;
+    }*@
 
 <!DOCTYPE html>
 
@@ -94,7 +94,7 @@
                     <span asp-validation-for="redcard" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default"  onclick="msgNotification()"/>
+                    <input type="submit" value="Create" class="btn btn-default" onclick="msgNotification()" />
                 </div>
             </form>
         </div>
@@ -107,37 +107,50 @@
 </body>
 </html>
 
-<script>
-    function msgNotification() {
-        alert("The player performance has been created successfully")
-    }
-</script>
+@if (@ViewBag.Error == 1)
+{
+    <script>
+        function msgNotification() {
+            alert("The player does not exist in the team!")
+        }
+    </script>
+
+}
+
+else
+{
+    <script>
+        function msgNotification() {
+            alert("The player performance has been created successfully")
+        }
+    </script>
+}
 
 
 @*@section Scripts {
-<script src="~/bundles/jquery.js" type="text/javascript"></script>
-    <script type="text/javascript">
-            $('#Team').change(function () {
-                var selectedTeam = $("#Team").val();
-                var playersSelect = $('#Player');
-                playersSelect.empty();
-                if (selectedTeam != null && selectedTeam != '') {
-                    $.getJSON('@Url.Action("GetPlayers")', { iso3: selectedTeam }, function (regions) {
-                        if (regions != null && !jQuery.isEmptyObject(regions))
-                        {
-                            playersSelect.append($('<option/>', {
-                                value: null,
-                                text: ""
-                            }));
-                            $.each(regions, function (index, region) {
+    <script src="~/bundles/jquery.js" type="text/javascript"></script>
+        <script type="text/javascript">
+                $('#Team').change(function () {
+                    var selectedTeam = $("#Team").val();
+                    var playersSelect = $('#Player');
+                    playersSelect.empty();
+                    if (selectedTeam != null && selectedTeam != '') {
+                        $.getJSON('@Url.Action("GetPlayers")', { iso3: selectedTeam }, function (regions) {
+                            if (regions != null && !jQuery.isEmptyObject(regions))
+                            {
                                 playersSelect.append($('<option/>', {
-                                    value: user.value,
-                                    text: user.text
+                                    value: null,
+                                    text: ""
                                 }));
-                            });
-                        };
-                    });
-                }
-            });
-    </script>
-}*@
+                                $.each(regions, function (index, region) {
+                                    playersSelect.append($('<option/>', {
+                                        value: user.value,
+                                        text: user.text
+                                    }));
+                                });
+                            };
+                        });
+                    }
+                });
+        </script>
+    }*@

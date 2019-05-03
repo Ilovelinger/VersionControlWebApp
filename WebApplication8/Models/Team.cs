@@ -17,6 +17,5 @@ namespace WebApplication8.Models
         public string teamName { get; set; }
 
 
-        //public byte[] TeamLogo { get; set; }
     }
 }

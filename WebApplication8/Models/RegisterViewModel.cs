@@ -46,7 +46,6 @@ namespace WebApplication8.Models
         [Required]
         public String UserRole { get; set; }
 
-        [Required]
         public IFormFile AvatarImage { get; set; }
     }
 

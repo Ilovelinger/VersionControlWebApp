@@ -52,6 +52,7 @@ namespace WebApplication8.Data
                     Firstname = "Haofan",
                     Surname = "Li",
                     Nickname = "Eric",
+                    FullName = "Haofan Li",
                     isRegistered = "No"
                 };
 
@@ -60,40 +61,6 @@ namespace WebApplication8.Data
                 {
                     await userManager.AddPasswordAsync(user, password);
                     await userManager.AddToRoleAsync(user, role1);
-                }
-            }
-
-            //Create user Customer1
-            if (await userManager.FindByNameAsync("Player1@Email.com") == null)
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = "Player1@Email.com",
-                    Email = "Player1@Email.com",
-                };
-
-                var result = await userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    await userManager.AddPasswordAsync(user, password);
-                    await userManager.AddToRoleAsync(user, role2);
-                }
-            }
-
-            //Create user Customer2
-            if (await userManager.FindByNameAsync("User1@Email.com") == null)
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = "User1@Email.com",
-                    Email = "User1@Email.com",
-                };
-
-                var result = await userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    await userManager.AddPasswordAsync(user, password);
-                    await userManager.AddToRoleAsync(user, role3);
                 }
             }
         }

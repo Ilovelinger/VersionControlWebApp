@@ -111,17 +111,15 @@ namespace WebApplication8.Controllers
                 Team linkedteam = await _context.Team
                     .SingleOrDefaultAsync(m => m.teamName == linkedteamname);
 
-                ApplicationUser linkeduser = await _context.Users.SingleOrDefaultAsync(m => m.FullName == linkedplayername);
+                ApplicationUser linkeduser = await _context.Users.Include(u => u.RelatedTeam).SingleOrDefaultAsync(m => m.FullName == linkedplayername);
 
-                //RegisteredUser tempuser = await _context.TeamRegisteredUsers.SingleOrDefaultAsync(m => m.FullName == linkedplayername);
+                var tempteam = linkeduser.RelatedTeam;
 
-                //var tempteam = linkeduser.RelatedTeam;
-
-                //if (tempteam.teamName != playerPerformance.linkedTeamname)
-                //{
-                //    ModelState.AddModelError("", "The player does not exist in the team!");
-                //    return View(playerPerformance);
-                //}
+                if (tempteam.teamName != playerPerformance.linkedTeamname)
+                {
+                    ViewBag.Error = 1;
+                    return RedirectToAction("MatchList", "Match");
+                }
 
                 int tempmatchid = (int)TempData["tempmatchid"];
                 Match match = await _context.Matches

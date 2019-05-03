@@ -86,9 +86,11 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
+            if (user.AvatarImage != null) {
+                string temp_inBase64 = Convert.ToBase64String(user.AvatarImage);
+                ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);
+            }
 
-            string temp_inBase64 = Convert.ToBase64String(user.AvatarImage);
-            ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);
 
             Input = new InputModel
             {

@@ -9,14 +9,7 @@ namespace WebApplication8.Models
     {
         public NewMatch NewMatch { get; set; }
 
-        //public List<Comment> Comments { get; set; }
-
         public int NewMatchID { get; set; }
-        //public string CommentsContent { get; set; }
 
-        //public MatchDetailViewModel()
-        //{
-        //    Comments = new List<Comment>();
-        //}
     }
 }

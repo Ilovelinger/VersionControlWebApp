@@ -12,7 +12,6 @@ namespace WebApplication8.Models
         [ScaffoldColumn(false)]
         public int newMatchId { get; set; }
 
-        //[MinLength(2), MaxLength(20)]
         [Required]
         public String matchType { get; set; }
 

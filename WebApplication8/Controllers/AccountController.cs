@@ -21,14 +21,6 @@ namespace WebApplication5.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signinManager;
 
-
-        //private readonly ApplicationDbContext db;
-
-        //public AccountController(ApplicationDbContext _db)
-        //{
-        //    db = _db;
-        //}
-
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;

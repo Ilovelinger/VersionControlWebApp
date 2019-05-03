@@ -43,9 +43,6 @@ namespace WebApplication8.Controllers
                 return NotFound();
             }
 
-            //string temp_inBase64 = Convert.ToBase64String(team.TeamLogo);
-            //ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);
-
             if (HttpContext.Session.GetString("isRegistered") == "No")
             {
                 ViewData["ShowButton"] = true;
@@ -142,12 +139,6 @@ namespace WebApplication8.Controllers
         {
             if (ModelState.IsValid)
             {
-                //using (var memoryStream = new MemoryStream())
-                //{
-                //    await file.CopyToAsync(memoryStream);
-                //    team.TeamLogo = memoryStream.ToArray();
-
-                //}
                 _context.Add(team);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

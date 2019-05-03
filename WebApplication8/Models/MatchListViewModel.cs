@@ -11,7 +11,7 @@ namespace WebApplication8.Models
     public class MatchListViewModel
     {
         public int NumberOfMatches { get; set; }
-        //Create a list of posts.
+
         public List<Match> Matches { get; set; }
 
     }
