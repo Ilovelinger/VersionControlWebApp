@@ -8,7 +8,7 @@ using WebApplication8.Models;
 namespace WebApplication8.Data
 {
     /// <summary>
-    /// This class is using for creating roles and seed database with several users.
+    /// This class is used for creating roles and seed database with an admin account.
     /// </summary>
     public class DummyData
     {

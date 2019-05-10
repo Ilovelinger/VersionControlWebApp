@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WebApplication8.Models
 {
     /// <summary>
-    /// This is the application role model with role attributes.
+    /// Application role model with role attributes.
     /// </summary>
     public class ApplicationRole : IdentityRole
     {

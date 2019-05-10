@@ -375,6 +375,8 @@ namespace WebApplication8.Migrations
 
                     b.Property<int?>("RelatedTeamteamId");
 
+                    b.Property<string>("RelatedUserId");
+
                     b.Property<string>("Surname");
 
                     b.Property<string>("isRegistered");
@@ -382,6 +384,8 @@ namespace WebApplication8.Migrations
                     b.HasKey("RegisteredUserId");
 
                     b.HasIndex("RelatedTeamteamId");
+
+                    b.HasIndex("RelatedUserId");
 
                     b.ToTable("TeamRegisteredUsers");
                 });
@@ -491,6 +495,10 @@ namespace WebApplication8.Migrations
                     b.HasOne("WebApplication8.Models.Team", "RelatedTeam")
                         .WithMany()
                         .HasForeignKey("RelatedTeamteamId");
+
+                    b.HasOne("WebApplication8.Models.ApplicationUser", "RelatedUser")
+                        .WithMany()
+                        .HasForeignKey("RelatedUserId");
                 });
 #pragma warning restore 612, 618
         }

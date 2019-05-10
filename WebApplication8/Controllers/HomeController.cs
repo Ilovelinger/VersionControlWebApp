@@ -17,23 +17,39 @@ namespace WebApplication8.Controllers
     public class HomeController : Controller
     {
 
+        /// <summary>
+        /// HttpGet method for homepage
+        /// </summary>
+        /// <returns>View</returns>
         [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// HttpGet method for about page
+        /// </summary>
+        /// <returns>View</returns>
         public IActionResult About()
         {
             return View();
         }
 
+        /// <summary>
+        /// HttpGet method for contact
+        /// </summary>
+        /// <returns>View</returns>
         public IActionResult Contact()
         {
 
             return View();
         }
 
+        /// <summary>
+        /// HttpGet method for privacy page
+        /// </summary>
+        /// <returns>View</returns>
         public IActionResult Privacy()
         {
             return View();

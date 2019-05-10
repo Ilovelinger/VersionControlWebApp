@@ -20,7 +20,7 @@ namespace WebApplication8.Controllers
     /// </summary>
     public class MatchController : Controller
     {
-        //Add a reference to the database I created
+        //Add a reference to the database
         private readonly ApplicationDbContext db;
 
         public MatchController(ApplicationDbContext _db)
@@ -28,15 +28,14 @@ namespace WebApplication8.Controllers
             db = _db;
         }
 
+        /// <summary>
+        /// HttpGet method for create match result.
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult MatchPage()
         {
-            //List<Team> teams = db.Team.ToList();
-
-            //SelectList teamlist = new SelectList(teams, "jurisdictionName", "jurisdictionName");
-
-            //ViewBag.teamlist = teamlist.AsEnumerable();
 
             ViewBag.drolistmenu1 = db.Team.Select(g => new SelectListItem
             {
@@ -55,6 +54,10 @@ namespace WebApplication8.Controllers
             return View("MatchPage");
         }
 
+        /// <summary>
+        /// HttpGet method for create new match.
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult AddNewMatch()
@@ -62,6 +65,10 @@ namespace WebApplication8.Controllers
             return View("AddNewMatch");
         }
 
+        /// <summary>
+        /// HttpGet method for viewing new match list.
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public IActionResult NewMatchList()
         {
@@ -72,6 +79,11 @@ namespace WebApplication8.Controllers
             return View(newmatchlistVM);
         }
 
+        /// <summary>
+        /// HttpPost method for create new match.
+        /// </summary>
+        /// <param name="newmatch"></param>
+        /// <returns>View</returns>
         [HttpPost, ActionName("CreateNewMatch")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> NewMatchListAsync(NewMatch newmatch)
@@ -82,6 +94,10 @@ namespace WebApplication8.Controllers
             return RedirectToAction("NewMatchList");
         }
 
+        /// <summary>
+        /// HttpGet method for viewing match list.
+        /// </summary>
+        /// <returns>View and viewmodel</returns>
         [HttpGet]
         public IActionResult MatchList()
         {
@@ -95,6 +111,11 @@ namespace WebApplication8.Controllers
             return View(matchlistVM);
         }
 
+        /// <summary>
+        /// HttpPost method for creating match result.
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns>Redirect to action</returns>
         [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> MatchListAsync(Match match)
@@ -115,6 +136,11 @@ namespace WebApplication8.Controllers
             return RedirectToAction("MatchList");
         }
 
+        /// <summary>
+        /// HttpGet method for viewing new match detail.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View and viewmodel</returns>
         public async Task<IActionResult> NewMatchDetail(int? id)
         {
             if (id == null)
@@ -136,10 +162,10 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Add comments to their related posts,only customer can do this.
+        /// HttpPost method for viewing new match detail.
         /// </summary>
         /// <param name="viewModel"></param>
-        /// <returns></returns>
+        /// <returns>View and view model</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Player,CommonUser")]
@@ -163,6 +189,11 @@ namespace WebApplication8.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Set new match object for viewmodel.
+        /// </summary>
+        /// <param name="newmatch"></param>
+        /// <returns>viewModel</returns>
         private async Task<NewMatchDetailViewModel> GetNewMatchDetailViewModelFromNewMatch(NewMatch newmatch)
         {
             NewMatchDetailViewModel viewModel = new NewMatchDetailViewModel();
@@ -174,10 +205,10 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Takes an id as input, check if the id and related match exist.
+        /// HttpGet method for viewing match detail and adding comments.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>View and viewmodel</returns>
         public async Task<IActionResult> AddComments(int? id)
         {
 
@@ -201,10 +232,10 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Add comments to their related posts,only customer can do this.
+        /// HttpPost method for adding comments.
         /// </summary>
         /// <param name="viewModel"></param>
-        /// <returns></returns>
+        /// <returns>View and viewmodel</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Player,CommonUser")]
@@ -247,10 +278,10 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Take comments from the databse and add them to a list.
+        /// Set the comment list for viewmodel.
         /// </summary>
         /// <param name="match"></param>
-        /// <returns></returns>
+        /// <returns>viewModel</returns>
         private async Task<MatchDetailViewModel> GetMatchDetailViewModelFromMatch(Match match)
         {
             MatchDetailViewModel viewModel = new MatchDetailViewModel();
@@ -267,10 +298,10 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Take an id as input,check if the id and its related match exist.
+        /// HttpGet method for editing match result.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>View and match</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditMatch(int? id)
         {
@@ -288,11 +319,11 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Edit the designated match,update the database.
+        /// HttpPost method,edit the designated match,update the database.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="post"></param>
-        /// <returns></returns>
+        /// <returns>View and match</returns>
         [HttpPost, ActionName("EditMatch")]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
@@ -327,10 +358,10 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Takes an id of the match that need to be deleted as input, check if the id and related match exist。
+        /// HttpGet method for deleteing match result.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>View and match</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -350,10 +381,10 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Delete the designated match from database,only admin can do this.
+        /// HttpPost method for deleting match result.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Redirect to action</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -365,16 +396,21 @@ namespace WebApplication8.Controllers
             return RedirectToAction(nameof(MatchList));
         }
 
+        /// <summary>
+        /// Check if the match exists.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>match</returns>
         private bool MatchExists(int id)
         {
             return db.Matches.Any(e => e.matchid == id);
         }
 
         /// <summary>
-        /// Take the id of the comment as input,check if the id and its realated comment exist
+        /// HttpGet method for deleting comment.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>View and comment</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteComment(int? id)
         {
@@ -394,10 +430,10 @@ namespace WebApplication8.Controllers
         }
 
         /// <summary>
-        /// Delete the designated comment from the database,only admin can do this.
+        /// HttpPost method for deleting comment.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Redirect to action</returns>
         [HttpPost, ActionName("DeleteComment")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -409,11 +445,21 @@ namespace WebApplication8.Controllers
             return RedirectToAction(nameof(MatchList));
         }
 
+        /// <summary>
+        /// Check if the comment exists.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Comment</returns>
         private bool CommentExists(int id)
         {
             return db.Comments.Any(e => e.commentid == id);
         }
 
+        /// <summary>
+        /// HttpGet method for viewing user profile.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
         public async Task<IActionResult> ViewUserProfile(string id)
         {
             if (id == null)
@@ -460,13 +506,12 @@ namespace WebApplication8.Controllers
                 ViewBag.Team = "Haven't register to a team";
                 ViewBag.IsRegistered = "No";
             }
-            string temp_inBase64 = Convert.ToBase64String(User.AvatarImage);
-            ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);
 
-
-
-
-
+            if (User.AvatarImage != null)
+            {
+                string temp_inBase64 = Convert.ToBase64String(User.AvatarImage);
+                ViewData["MyPic"] = String.Format("data:image/jpeg;base64,{0}", temp_inBase64);
+            }
 
             return View();
 

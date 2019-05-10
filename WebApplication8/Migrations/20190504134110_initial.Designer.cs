@@ -10,8 +10,8 @@ using WebApplication8.Data;
 namespace WebApplication8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190502133102_initial4")]
-    partial class initial4
+    [Migration("20190504134110_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -246,19 +246,24 @@ namespace WebApplication8.Migrations
 
                     b.Property<DateTime>("dateTime");
 
-                    b.Property<string>("location");
+                    b.Property<string>("location")
+                        .IsRequired();
 
-                    b.Property<string>("overtime");
+                    b.Property<string>("overtime")
+                        .IsRequired();
 
-                    b.Property<string>("penalty");
+                    b.Property<string>("penalty")
+                        .IsRequired();
 
-                    b.Property<string>("team1Name");
+                    b.Property<string>("team1Name")
+                        .IsRequired();
 
                     b.Property<int>("team1PenaltyScore");
 
                     b.Property<int>("team1Score");
 
-                    b.Property<string>("team2Name");
+                    b.Property<string>("team2Name")
+                        .IsRequired();
 
                     b.Property<int>("team2PenaltyScore");
 
@@ -279,17 +284,22 @@ namespace WebApplication8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Overtime");
+                    b.Property<string>("Overtime")
+                        .IsRequired();
 
-                    b.Property<string>("Penalty");
+                    b.Property<string>("Penalty")
+                        .IsRequired();
 
                     b.Property<DateTime>("dateTime");
 
-                    b.Property<string>("location");
+                    b.Property<string>("location")
+                        .IsRequired();
 
-                    b.Property<string>("matchDescription");
+                    b.Property<string>("matchDescription")
+                        .IsRequired();
 
-                    b.Property<string>("matchType");
+                    b.Property<string>("matchType")
+                        .IsRequired();
 
                     b.HasKey("newMatchId");
 
@@ -316,17 +326,21 @@ namespace WebApplication8.Migrations
 
                     b.Property<int>("keypasses");
 
-                    b.Property<string>("linkedTeamname");
+                    b.Property<string>("linkedTeamname")
+                        .IsRequired();
 
-                    b.Property<string>("linkedplayername");
+                    b.Property<string>("linkedplayername")
+                        .IsRequired();
 
                     b.Property<int>("redcard");
 
                     b.Property<int>("saves");
 
-                    b.Property<string>("startup");
+                    b.Property<string>("startup")
+                        .IsRequired();
 
-                    b.Property<string>("substitute");
+                    b.Property<string>("substitute")
+                        .IsRequired();
 
                     b.Property<int>("yellowcard");
 
@@ -363,6 +377,8 @@ namespace WebApplication8.Migrations
 
                     b.Property<int?>("RelatedTeamteamId");
 
+                    b.Property<string>("RelatedUserId");
+
                     b.Property<string>("Surname");
 
                     b.Property<string>("isRegistered");
@@ -370,6 +386,8 @@ namespace WebApplication8.Migrations
                     b.HasKey("RegisteredUserId");
 
                     b.HasIndex("RelatedTeamteamId");
+
+                    b.HasIndex("RelatedUserId");
 
                     b.ToTable("TeamRegisteredUsers");
                 });
@@ -381,6 +399,7 @@ namespace WebApplication8.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("teamName")
+                        .IsRequired()
                         .HasMaxLength(20);
 
                     b.HasKey("teamId");
@@ -478,6 +497,10 @@ namespace WebApplication8.Migrations
                     b.HasOne("WebApplication8.Models.Team", "RelatedTeam")
                         .WithMany()
                         .HasForeignKey("RelatedTeamteamId");
+
+                    b.HasOne("WebApplication8.Models.ApplicationUser", "RelatedUser")
+                        .WithMany()
+                        .HasForeignKey("RelatedUserId");
                 });
 #pragma warning restore 612, 618
         }

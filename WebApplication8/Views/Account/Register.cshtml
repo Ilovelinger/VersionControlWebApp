@@ -4,7 +4,7 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>Register Page</h2>
+@*<h2>Register Page</h2>*@
 
 @*<div class="row">
     <div class="col-md-4">
@@ -79,7 +79,8 @@
 </div>*@
 
 <form method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="Register">
-    <h4>Create a new account.</h4>
+    <h4>                    </h4>
+    <h4>Create a new account</h4>
     <hr />
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
@@ -152,13 +153,13 @@
     </div>
     <div class="form-group">
         <div class="col-md-10">
-            <p>Upload one or more files using this form:</p>
+            <p>Upload avatar image</p>
             <input type="file" name="file" multiple />
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-10">
-            <input type="submit" value="Upload" />
+            <input type="submit" value="Register" />
         </div>
     </div>
 </form>

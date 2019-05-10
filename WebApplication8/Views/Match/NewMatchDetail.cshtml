@@ -7,21 +7,10 @@
     ViewData["Title"] = "NewMatchDetail";
 }
 
-@*<style>
-    body {
-        background-color: darkseagreen;
-    }
-
-    p {
-        font-family: "Times New Roman";
-        font-size: 20px;
-    }
-</style>*@
 
 <h2>New Match detail</h2>
 
 <div>
-    <h4>Match</h4>
     <hr />
     <dl class="dl-horizontal">
         <dd>
@@ -42,6 +31,8 @@
         <dd>
             Match description: @Html.DisplayFor(model => model.NewMatch.matchDescription)
         </dd>
+
+
 
         <a asp-controller="Match" asp-action="NewMatchList"> Go to new match list page</a>
     </dl>

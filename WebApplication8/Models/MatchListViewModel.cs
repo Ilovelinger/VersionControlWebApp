@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace WebApplication8.Models
 {
     /// <summary>
-    /// This is the application post list view model
+    /// Application post list view model
     /// </summary>
     public class MatchListViewModel
     {

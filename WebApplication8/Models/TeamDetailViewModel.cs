@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebApplication8.Models
 {
+    /// <summary>
+    /// Team detail view model
+    /// </summary>
     public class TeamDetailViewModel
     {
         public Team Team { get; set; }

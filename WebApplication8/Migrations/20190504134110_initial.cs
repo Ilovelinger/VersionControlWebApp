@@ -29,12 +29,12 @@ namespace WebApplication8.Migrations
                 {
                     newMatchId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    matchType = table.Column<string>(nullable: true),
+                    matchType = table.Column<string>(nullable: false),
                     dateTime = table.Column<DateTime>(nullable: false),
-                    location = table.Column<string>(nullable: true),
-                    Penalty = table.Column<string>(nullable: true),
-                    Overtime = table.Column<string>(nullable: true),
-                    matchDescription = table.Column<string>(nullable: true)
+                    location = table.Column<string>(nullable: false),
+                    Penalty = table.Column<string>(nullable: false),
+                    Overtime = table.Column<string>(nullable: false),
+                    matchDescription = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,7 +47,7 @@ namespace WebApplication8.Migrations
                 {
                     teamId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    teamName = table.Column<string>(maxLength: 20, nullable: true)
+                    teamName = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,14 +122,14 @@ namespace WebApplication8.Migrations
                 {
                     matchid = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    team1Name = table.Column<string>(nullable: true),
-                    team2Name = table.Column<string>(nullable: true),
-                    location = table.Column<string>(nullable: true),
+                    team1Name = table.Column<string>(nullable: false),
+                    team2Name = table.Column<string>(nullable: false),
+                    location = table.Column<string>(nullable: false),
                     team1Score = table.Column<int>(nullable: false),
                     team2Score = table.Column<int>(nullable: false),
                     dateTime = table.Column<DateTime>(nullable: false),
-                    penalty = table.Column<string>(nullable: true),
-                    overtime = table.Column<string>(nullable: true),
+                    penalty = table.Column<string>(nullable: false),
+                    overtime = table.Column<string>(nullable: false),
                     team1PenaltyScore = table.Column<int>(nullable: false),
                     team2PenaltyScore = table.Column<int>(nullable: false),
                     RelatedTeam1teamId = table.Column<int>(nullable: true),
@@ -147,35 +147,6 @@ namespace WebApplication8.Migrations
                     table.ForeignKey(
                         name: "FK_Matches_Team_RelatedTeam2teamId",
                         column: x => x.RelatedTeam2teamId,
-                        principalTable: "Team",
-                        principalColumn: "teamId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TeamRegisteredUsers",
-                columns: table => new
-                {
-                    RegisteredUserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Firstname = table.Column<string>(nullable: true),
-                    Surname = table.Column<string>(nullable: true),
-                    Nickname = table.Column<string>(nullable: true),
-                    MobilePhoneNumber = table.Column<int>(nullable: false),
-                    KitNumber = table.Column<int>(nullable: false),
-                    Position = table.Column<string>(nullable: true),
-                    FullName = table.Column<string>(nullable: true),
-                    AvatarImage = table.Column<byte[]>(nullable: true),
-                    RelatedTeamteamId = table.Column<int>(nullable: true),
-                    RelatedTeamName = table.Column<string>(nullable: true),
-                    isRegistered = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TeamRegisteredUsers", x => x.RegisteredUserId);
-                    table.ForeignKey(
-                        name: "FK_TeamRegisteredUsers_Team_RelatedTeamteamId",
-                        column: x => x.RelatedTeamteamId,
                         principalTable: "Team",
                         principalColumn: "teamId",
                         onDelete: ReferentialAction.Restrict);
@@ -267,6 +238,42 @@ namespace WebApplication8.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TeamRegisteredUsers",
+                columns: table => new
+                {
+                    RegisteredUserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Firstname = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
+                    Nickname = table.Column<string>(nullable: true),
+                    MobilePhoneNumber = table.Column<int>(nullable: false),
+                    KitNumber = table.Column<int>(nullable: false),
+                    Position = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
+                    AvatarImage = table.Column<byte[]>(nullable: true),
+                    RelatedTeamteamId = table.Column<int>(nullable: true),
+                    RelatedTeamName = table.Column<string>(nullable: true),
+                    RelatedUserId = table.Column<string>(nullable: true),
+                    isRegistered = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeamRegisteredUsers", x => x.RegisteredUserId);
+                    table.ForeignKey(
+                        name: "FK_TeamRegisteredUsers_Team_RelatedTeamteamId",
+                        column: x => x.RelatedTeamteamId,
+                        principalTable: "Team",
+                        principalColumn: "teamId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TeamRegisteredUsers_AspNetUsers_RelatedUserId",
+                        column: x => x.RelatedUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -274,7 +281,8 @@ namespace WebApplication8.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     commentscontent = table.Column<string>(maxLength: 200, nullable: true),
                     commentUsername = table.Column<string>(nullable: true),
-                    RelatedMatchmatchid = table.Column<int>(nullable: true)
+                    RelatedMatchmatchid = table.Column<int>(nullable: true),
+                    RelatedUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -285,6 +293,12 @@ namespace WebApplication8.Migrations
                         principalTable: "Matches",
                         principalColumn: "matchid",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_RelatedUserId",
+                        column: x => x.RelatedUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -293,8 +307,10 @@ namespace WebApplication8.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    startup = table.Column<string>(nullable: true),
-                    substitute = table.Column<string>(nullable: true),
+                    linkedTeamname = table.Column<string>(nullable: false),
+                    linkedplayername = table.Column<string>(nullable: false),
+                    startup = table.Column<string>(nullable: false),
+                    substitute = table.Column<string>(nullable: false),
                     goals = table.Column<int>(nullable: false),
                     assists = table.Column<int>(nullable: false),
                     keypasses = table.Column<int>(nullable: false),
@@ -373,6 +389,11 @@ namespace WebApplication8.Migrations
                 column: "RelatedMatchmatchid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_RelatedUserId",
+                table: "Comments",
+                column: "RelatedUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Matches_RelatedTeam1teamId",
                 table: "Matches",
                 column: "RelatedTeam1teamId");
@@ -396,6 +417,11 @@ namespace WebApplication8.Migrations
                 name: "IX_TeamRegisteredUsers_RelatedTeamteamId",
                 table: "TeamRegisteredUsers",
                 column: "RelatedTeamteamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeamRegisteredUsers_RelatedUserId",
+                table: "TeamRegisteredUsers",
+                column: "RelatedUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebApplication8.Models
 {
+    /// <summary>
+    /// Player performance model with attributes
+    /// </summary>
     public class PlayerPerformance
     {
         [Key]

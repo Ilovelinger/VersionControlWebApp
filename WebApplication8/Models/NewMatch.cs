@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebApplication8.Models
 {
+    /// <summary>
+    /// New match model with attributes
+    /// </summary>
     public class NewMatch
     {
         [Key]

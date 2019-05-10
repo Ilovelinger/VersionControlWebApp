@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebApplication8.Models
 {
+    /// <summary>
+    /// Team model with attributes
+    /// </summary>
     public class Team
     {
         [Key]

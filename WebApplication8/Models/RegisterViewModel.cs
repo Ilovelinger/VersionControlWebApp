@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WebApplication8.Models
 {
     /// <summary>
-    /// This is the application register view model.
+    /// Application register view model.
     /// </summary>
     public class RegisterViewModel
     {

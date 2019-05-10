@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace WebApplication8.Models
 {
-
+    /// <summary>
+    /// Match result model with attributes.
+    /// </summary>
     public class Match
     {
         [Key]

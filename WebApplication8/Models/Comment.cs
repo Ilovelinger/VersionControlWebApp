@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WebApplication8.Models
 {
     /// <summary>
-    /// This is the application comment model with comment attributes.
+    /// Application comment model with comment attributes.
     /// </summary>
     public class Comment
     {

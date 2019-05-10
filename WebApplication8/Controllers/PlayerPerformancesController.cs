@@ -13,6 +13,7 @@ namespace WebApplication8.Controllers
 {
     public class PlayerPerformancesController : Controller
     {
+        //Add reference to the database.
         private readonly ApplicationDbContext _context;
 
         public PlayerPerformancesController(ApplicationDbContext context)
@@ -20,7 +21,11 @@ namespace WebApplication8.Controllers
             _context = context;
         }
 
-        // GET: PlayerPerformances
+        /// <summary>
+        /// HttpGet method for viewing player performance.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View and performance list</returns>
         public async Task<IActionResult> Index(int ?id)
         {
             var allperformance = _context.PlayerPerformance.ToList();
@@ -30,30 +35,15 @@ namespace WebApplication8.Controllers
 
             var performances = allperformance.Where(x => x.RelatedMatch == match).ToList();
 
-
-            //return View(await _context.PlayerPerformance.ToListAsync());
             return View(performances);
         }
 
-        // GET: PlayerPerformances/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var playerPerformance = await _context.PlayerPerformance
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (playerPerformance == null)
-            {
-                return NotFound();
-            }
-
-            return View(playerPerformance);
-        }
-
-        // GET: PlayerPerformances/Create
+        /// <summary>
+        /// HttpGet method for creating player performance.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAsync(int? id)
         {
@@ -95,9 +85,11 @@ namespace WebApplication8.Controllers
             return View("Create");
         }
 
-        // POST: PlayerPerformances/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// HttpPost action for creating player performance.
+        /// </summary>
+        /// <param name="playerPerformance"></param>
+        /// <returns>View and player performance</returns>
         [HttpPost, ActionName("CreatePlayerPerformance")]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
@@ -117,9 +109,11 @@ namespace WebApplication8.Controllers
 
                 if (tempteam.teamName != playerPerformance.linkedTeamname)
                 {
-                    ViewBag.Error = 1;
-                    return RedirectToAction("MatchList", "Match");
+                    ViewData["error"] = true;
+                    return RedirectToAction("MatchList", "Match",ViewData["error"]);
                 }
+
+                ViewData["error"] = false;
 
                 int tempmatchid = (int)TempData["tempmatchid"];
                 Match match = await _context.Matches
@@ -130,12 +124,16 @@ namespace WebApplication8.Controllers
 
                 _context.Add(playerPerformance);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("MatchList", "Match"); 
+                return RedirectToAction("MatchList", "Match",ViewData["error"]); 
             }
             return View(playerPerformance);
         }
 
-        // GET: PlayerPerformances/Edit/5
+        /// <summary>
+        /// HttpGet method for editing player performance.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View and player performance</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -152,9 +150,12 @@ namespace WebApplication8.Controllers
             return View(playerPerformance);
         }
 
-        // POST: PlayerPerformances/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// HttpPost method for editing player performance
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="playerPerformance"></param>
+        /// <returns>View and player performance</returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
@@ -189,7 +190,11 @@ namespace WebApplication8.Controllers
             return View(playerPerformance);
         }
 
-        // GET: PlayerPerformances/Delete/5
+        /// <summary>
+        /// HttpGet method for deleting player performance.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View and playerperformance</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -208,7 +213,11 @@ namespace WebApplication8.Controllers
             return View(playerPerformance);
         }
 
-        // POST: PlayerPerformances/Delete/5
+       /// <summary>
+       /// HttpPost method for deleting player performance
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns>Redirect to action</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]

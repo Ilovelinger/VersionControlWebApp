@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace WebApplication8.Models
 {
     /// <summary>
-    /// This is the application post detail view model,with comments' content in the designated post.
+    /// Application post detail view model,with comments' content in the designated post.
     /// </summary>
     public class MatchDetailViewModel
     {

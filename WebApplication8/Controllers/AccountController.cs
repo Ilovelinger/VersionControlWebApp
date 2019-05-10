@@ -27,6 +27,10 @@ namespace WebApplication5.Controllers
             _signinManager = signInManager;
         }
 
+        /// <summary>
+        /// HttpGet method for register
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public IActionResult Register()
         {
@@ -37,15 +41,13 @@ namespace WebApplication5.Controllers
         /// Register a user, store the information to the database and assign he/she a role.
         /// </summary>
         /// <param name="vm"></param>
-        /// <returns></returns>
+        /// <returns>Redirect to action</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel vm,IFormFile file)
         {
-            //ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                //Take the email address input as user name and email
                 var user = new ApplicationUser { UserName = vm.Email, Email = vm.Email,Nickname = vm.NickName, Firstname = vm.Firstname, Surname = vm.Surname,FullName = vm.FullName,Position = vm.Position,MobilePhoneNumber = vm.MobilePhoneNumber,KitNumber = vm.KitNumber };
                 user.isRegistered = "No";
 
@@ -86,6 +88,10 @@ namespace WebApplication5.Controllers
             return View(vm);
         }
 
+        /// <summary>
+        /// HttpGet method for login
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public IActionResult Login()
         {
@@ -96,7 +102,7 @@ namespace WebApplication5.Controllers
         /// Compare login information with user information from database, if matches then login.
         /// </summary>
         /// <param name="vm"></param>
-        /// <returns></returns>
+        /// <returns>Redirect to action</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel vm)
@@ -117,6 +123,10 @@ namespace WebApplication5.Controllers
             return View(vm);
         }
 
+        /// <summary>
+        /// Collect current logged in user data.
+        /// </summary>
+        /// <returns>Redirect to action</returns>
         public async Task<ActionResult> DoWork() 
 
         {

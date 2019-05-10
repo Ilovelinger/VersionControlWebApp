@@ -22,13 +22,20 @@ namespace WebApplication8.Controllers
             _context = context;
         }
 
-        // GET: Teams
+        /// <summary>
+        /// HttpGet method for viewing team list.
+        /// </summary>
+        /// <returns>View and list</returns>
         public async Task<IActionResult> Index()
         {
             return View(await _context.Team.ToListAsync());
         }
 
-        // GET: Teams/Details/5
+        /// <summary>
+        /// HttpGet method for viewing team detail.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View and viewmodel</returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -59,6 +66,11 @@ namespace WebApplication8.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// HttpPost method for viewing team detail and register in a team
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns>View and viewmodel</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Player,CommonUser")]
@@ -89,6 +101,7 @@ namespace WebApplication8.Controllers
                 tempuser.RelatedTeam = team;
 
                 user.RelatedTeam = tempuser.RelatedTeam;
+                user.RelatedUser = tempuser;
                 user.Firstname = tempuser.Firstname;
                 user.Surname = tempuser.Surname;
                 user.FullName = tempuser.FullName;
@@ -108,30 +121,41 @@ namespace WebApplication8.Controllers
         }
 
 
+        /// <summary>
+        /// Set the team and user list for viewmodel
+        /// </summary>
+        /// <param name="team"></param>
+        /// <returns>viewmodel</returns>
         private async Task<TeamDetailViewModel> GetTeamDetailViewModelFromTeam(Team team)
         {
             TeamDetailViewModel viewModel = new TeamDetailViewModel();
 
             viewModel.Team = team;
 
-            List<RegisteredUser> users = await _context.TeamRegisteredUsers
+            List<RegisteredUser> users = await _context.TeamRegisteredUsers.Include(u => u.RelatedUser)
                 .Where(m => m.RelatedTeam == team).ToListAsync();
 
             viewModel.RegisteredUsers = users;
+
             return viewModel;
 
         }
 
-        // GET: Teams/Create
+        /// <summary>
+        /// HttpGet method for creating team
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Teams/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// HttpPost method for creating team
+        /// </summary>
+        /// <param name="team"></param>
+        /// <returns>View and team</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -147,7 +171,11 @@ namespace WebApplication8.Controllers
         }
 
 
-        // GET: Teams/Edit/5
+        /// <summary>
+        /// HttpGet method for editing team
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View and team</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -165,9 +193,12 @@ namespace WebApplication8.Controllers
             return View(team);
         }
 
-        // POST: Teams/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+       /// <summary>
+       /// HttpPost method for editing team
+       /// </summary>
+       /// <param name="id"></param>
+       /// <param name="team"></param>
+       /// <returns>View and team</returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
@@ -201,7 +232,11 @@ namespace WebApplication8.Controllers
             return View(team);
         }
 
-        // GET: Teams/Delete/5
+        /// <summary>
+        /// HttpGet method for deleting team
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View and team</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -220,7 +255,11 @@ namespace WebApplication8.Controllers
             return View(team);
         }
 
-        // POST: Teams/Delete/5
+        /// <summary>
+        /// HttpPost method for deleting team
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Redirect to action</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -232,6 +271,11 @@ namespace WebApplication8.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// check if the team exists.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>team</returns>
         private bool TeamExists(int id)
         {
             return _context.Team.Any(e => e.teamId == id);

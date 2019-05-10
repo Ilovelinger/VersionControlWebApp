@@ -31,18 +31,12 @@
         {
             <tr>
                 <td>
-                    @user.FullName
+                    <a asp-controller="Match" asp-action="ViewUserProfile" asp-route-id="@user.RelatedUser.Id">@user.FullName</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-@*<form method="post">
-        <input type="submit" value="Register to the Team" name="Register">
-    </form>*@
-
-@*<a asp-controller="Teams" asp-action="AddRegisterUser" asp-route-id="@Model.Team.teamId">Register to the team </a>*@
 
 @{
     var theValue = (bool?)ViewData["ShowButton"];

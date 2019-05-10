@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WebApplication8.Models
 {
     /// <summary>
-    /// This is the application user model with user attributes.
+    /// Application user model with user attributes.
     /// </summary>
     public class ApplicationUser : IdentityUser
     {

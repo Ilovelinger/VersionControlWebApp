@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebApplication8.Models
 {
+    /// <summary>
+    /// New match detail viewmodel
+    /// </summary>
     public class NewMatchDetailViewModel
     {
         public NewMatch NewMatch { get; set; }

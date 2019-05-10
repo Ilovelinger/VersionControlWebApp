@@ -105,19 +105,25 @@
     </div>
 
 </body>
+
 </html>
 
-@if (@ViewBag.Error == 1)
+@{
+    var theValue = (bool?)ViewData["error"];
+}
+
+
+@if (theValue == true)
 {
     <script>
         function msgNotification() {
-            alert("The player does not exist in the team!")
+            alert("Operation failed! The player does not exist in the team!")
         }
     </script>
 
 }
 
-else
+else if (theValue == false)
 {
     <script>
         function msgNotification() {
@@ -125,6 +131,7 @@ else
         }
     </script>
 }
+
 
 
 @*@section Scripts {

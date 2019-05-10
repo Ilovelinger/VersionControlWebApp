@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebApplication8.Models
 {
+    /// <summary>
+    /// Registered user model
+    /// </summary>
     public class RegisteredUser
     {
         [Key]
@@ -26,6 +29,8 @@ namespace WebApplication8.Models
         public virtual Team RelatedTeam { get; set; }
 
         public string RelatedTeamName { get; set; }
+
+        public virtual ApplicationUser RelatedUser { get; set; }
 
         public string isRegistered { get; set; }
     }
