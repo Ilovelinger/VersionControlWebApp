@@ -14,17 +14,6 @@
 }
 
 
-@*<style>
-    body {
-        background-color: darkseagreen;
-    }
-
-    p {
-        font-family: "Times New Roman";
-        font-size: 20px;
-    }
-</style>*@
-
 <h2>Match detail</h2>
 
 <div>
@@ -64,8 +53,6 @@
         {
             <tr>
                 <td>
-                    
-               @*<a asp-area="Identity" asp-page="/Account/Manage/Index">@comment.commentUsername</a>:*@
                     <a asp-controller="Match" asp-action="ViewUserProfile" asp-route-id="@comment.RelatedUser.Id">@comment.commentUsername</a>:
 
                     @comment.commentscontent
@@ -76,7 +63,6 @@
     </tbody>
 </table>
 
-@*<h4>Add a new comment</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">

@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<WebApplication8.Models.PlayerPerformance>
 
-@*@{
-    Layout = null;
-}*@
 
 <!DOCTYPE html>
 
@@ -12,9 +9,7 @@
     <title>Index</title>
 </head>
 <body>
-@*<p>
-    <a asp-action="CreateAsync">Create New Player</a>
-</p>*@
+
 <table class="table">
     <thead>
         <tr>
@@ -97,8 +92,6 @@
                 @Html.DisplayFor(modelItem => item.redcard)
             </td>
             <td>
-                @*<a asp-action="Edit" asp-route-id="@item.id">Edit</a> |*@
-                @*<a asp-action="Details" asp-route-id="@item.id">Details</a> |*@
                 @if (User.IsInRole("Admin"))
                 {
                     <a asp-action="Delete" asp-route-id="@item.id">Delete</a>

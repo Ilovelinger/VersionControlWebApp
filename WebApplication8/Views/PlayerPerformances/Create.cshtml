@@ -1,9 +1,6 @@
 ﻿@model WebApplication8.Models.PlayerPerformance
 @using System.Web.Optimization
 
-@*@{
-        Layout = null;
-    }*@
 
 <!DOCTYPE html>
 
@@ -133,31 +130,3 @@ else if (theValue == false)
 }
 
 
-
-@*@section Scripts {
-    <script src="~/bundles/jquery.js" type="text/javascript"></script>
-        <script type="text/javascript">
-                $('#Team').change(function () {
-                    var selectedTeam = $("#Team").val();
-                    var playersSelect = $('#Player');
-                    playersSelect.empty();
-                    if (selectedTeam != null && selectedTeam != '') {
-                        $.getJSON('@Url.Action("GetPlayers")', { iso3: selectedTeam }, function (regions) {
-                            if (regions != null && !jQuery.isEmptyObject(regions))
-                            {
-                                playersSelect.append($('<option/>', {
-                                    value: null,
-                                    text: ""
-                                }));
-                                $.each(regions, function (index, region) {
-                                    playersSelect.append($('<option/>', {
-                                        value: user.value,
-                                        text: user.text
-                                    }));
-                                });
-                            };
-                        });
-                    }
-                });
-        </script>
-    }*@

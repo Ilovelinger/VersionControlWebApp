@@ -211,22 +211,6 @@ namespace WebApplication8.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
 
-            //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            //if (Input.PhoneNumber != phoneNumber)
-            //{
-            //    var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-            //    if (!setPhoneResult.Succeeded)
-            //    {
-            //        var userId = await _userManager.GetUserIdAsync(user);
-            //        throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
-            //    }
-            //}
-
-            //using (var memoryStream = new MemoryStream())
-            //{
-            //    await uploadfile.CopyToAsync(memoryStream);
-            //    user.AvatarImage = memoryStream.ToArray();
-            //}
         }
     }
 }

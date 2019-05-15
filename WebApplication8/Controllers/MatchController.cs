@@ -360,7 +360,7 @@ namespace WebApplication8.Controllers
         /// <summary>
         /// HttpGet method for deleteing match result.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id"></param> 
         /// <returns>View and match</returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
